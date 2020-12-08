@@ -4,7 +4,7 @@
 ## Attention
 This is a **proof of concept**. This is still in progress. :warning: Do not use in production.
 
-:blue_heart: If you want to have a complete Tailwindcss theme, then participate here and submit your changes via pull request. :sparkles:
+:blue_heart: If you want to have a complete Tailwindcss theme, participate here and submit your changes via pull request. :sparkles:
 
 ## Installation
 
