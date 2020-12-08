@@ -1,6 +1,6 @@
 {
-  "name": "swag/theme-skeleton",
-  "description": "Theme skeleton plugin",
+  "name": "flagbit/tailwind-theme",
+  "description": "Shopware 6 Tailwind theme",
   "type": "shopware-platform-plugin",
   "license": "MIT",
   "autoload": {
@@ -14,5 +14,13 @@
       "de-DE": "Tailwind Theme plugin",
       "en-GB": "Tailwind Theme plugin"
     }
-  }
+  },
+  "authors": [
+    {
+      "name": "Björn Meyer",
+      "email": "bjoern.meyer@flagbit.de",
+      "homepage": "https://www.flagbit.de",
+      "role": "Developer"
+    }
+  ]
 }
