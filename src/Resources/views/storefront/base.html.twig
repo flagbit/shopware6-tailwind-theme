@@ -1,0 +1,44 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_header %}
+
+{% endblock %}
+
+{% block base_navigation %}
+    <div class="nav-main">
+        {% block base_navigation_inner %}
+            {% sw_include '@Storefront/storefront/layout/navigation/navigation.html.twig' %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block base_main %}
+    <main class="content-main">
+
+    </main>
+{% endblock %}
+
+{% block base_offcanvas_navigation %}
+
+{% endblock %}
+
+{% block base_footer %}
+
+{% endblock %}
+
+{% block base_scroll_up %}
+
+{% endblock %}
+
+{% block base_cookie_permission %}
+
+{% endblock %}
+
+{% block base_pseudo_modal %}
+
+{% endblock %}
+
+{% block base_script_hmr_mode %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('tailwindcss/js/app.js', '@Tailwind') }}"></script>
+{% endblock %}

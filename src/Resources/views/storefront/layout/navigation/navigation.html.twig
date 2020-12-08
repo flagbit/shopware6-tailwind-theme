@@ -1,0 +1,78 @@
+{% sw_extends '@Storefront/storefront/layout/navigation/navigation.html.twig' %}
+
+{% block layout_main_navigation %}
+    <nav id="menu" class="nav-menu relative bg-white border-b-2 border-gray-300 text-gray-900"
+         itemscope="itemscope"
+         itemtype="http://schema.org/SiteNavigationElement">
+        <div class="w-full text-gray-700 bg-white dark:text-gray-200 dark:bg-gray-800">
+            <div x-data="{ open: false }" class="flex flex-col max-w-screen-xl2 px-4 mx-auto lg:items-center lg:justify-between lg:flex-row lg:px-6 lg:px-8">
+                <div class="flex flex-row items-center justify-between p-4">
+                    {% sw_include '@Tailwind/storefront/layout/navigation/logo.html.twig' %}
+                    {# Button mobile burger menu #}
+                    <button class="rounded-lg lg:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
+                        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                            <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                            <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow hidden pb-4 lg:pb-0 lg:flex lg:justify-end lg:flex-row">
+                    {% set levelOneCategoryCount = page.header.navigation.tree | length %}
+                    {% set positionChangeLeftRight = (levelOneCategoryCount / 2)|round %}
+                    {% set currentPosition = 0 %}
+
+                    {% block layout_main_navigation_menu_items %}
+                        {% for treeItem in page.header.navigation.tree %}
+                            {% set category = treeItem.category %}
+                            {% set name = category.translated.name %}
+                            {% set categorId = category.id %}
+                            {% set navigationChildrenCount = category.childCount %}
+                            {% set currentPosition = currentPosition + 1 %}
+                            {% block layout_main_navigation_menu_item %}
+                                {% if category.type == 'folder' %}
+                                    <a class="px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-sw-navigation-hover rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 lg:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-sw-navigation-hover focus:bg-sw-navigation-hover focus:outline-none focus:shadow-outline" href="#">
+                                        <span itemprop="name">{{ name }}</span>
+                                    </a>
+                                {% else %}
+                                    <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                                        {% set active = 0 %}
+                                        {% for childItem in treeItem.children %}
+                                            {% if childItem.category.id is same as(page.header.navigation.active.id) %}
+                                                {% set active = 1 %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:text-white
+                                                                             dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 lg:w-auto lg:inline lg:mt-0 lg:ml-4 hover:text-gray-900
+                                                                             focus:text-gray-900 hover:bg-sw-navigation-hover focus:bg-sw-navigation-hover focus:outline-none focus:shadow-outline lg:max-w-xxs
+                                                                             {% if active == 1 or categorId is same as(page.header.navigation.active.id) %}text-gray-900 bg-sw-navigation-active rounded-lg focus:bg-sw-navigation-active{% endif %}">
+                                            <span>{{ name }} <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform lg:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></span>
+                                        </button>
+                                        {% if navigationChildrenCount > 0 %}
+                                            <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95"
+                                                 class="absolute w-full lg:max-w-screen-md lg:w-screen mt-2 {% if currentPosition < positionChangeLeftRight %}left-0 origin-top-left{% else %}right-0 origin-top-right{% endif %} z-30">
+                                                <div class="px-2 pt-2 pb-4 bg-white rounded-md shadow-lg dark:bg-gray-700">
+                                                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                                        {% block layout_main_navigation_menu_flyout_wrapper %}
+                                                            {% sw_include '@Storefront/storefront/layout/navigation/flyout.html.twig' with {navigationTree: treeItem, level: level, page: page} only %}
+                                                            {% for childItem in treeItem.children %}
+                                                                {% if treeItem.children|length > 0 %}
+                                                                    {% block layout_main_navigation_menu_flyout %}
+                                                                        {% sw_include '@Storefront/storefront/layout/navigation/flyout.html.twig' with {navigationTree: childItem, level: level+1, page: page} only %}
+                                                                    {% endblock %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endblock %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
+                        {% endfor %}
+                    {% endblock %}
+                </nav>
+            </div>
+        </div>
+    </nav>
+{% endblock %}

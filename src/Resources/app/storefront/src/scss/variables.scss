@@ -1,0 +1,20 @@
+// This file is generated during ./psh.phar storefront:build
+@import "/app/var/theme-variables.scss";
+
+:root {
+  --background-color: $sw-background-color;
+  --border-color: $sw-border-color;
+  --color-buy-button: $sw-color-buy-button;
+  --color-buy-button-text: $sw-color-buy-button-text;
+  --color-danger: $sw-color-danger;
+  --color-info: $sw-color-info;
+  --color-price: $sw-color-price;
+  --color-primary: $sw-color-brand-primary;
+  --color-secondary: $sw-color-brand-secondary;
+  --color-success: $sw-color-success;
+  --color-warning: $sw-color-warning;
+  --headline-color: $sw-headline-color;
+  --navigation-active-color: $sw-navigation-active-color;
+  --navigation-hover-color: $sw-navigation-hover-color;
+  --text-color: $sw-text-color;
+}

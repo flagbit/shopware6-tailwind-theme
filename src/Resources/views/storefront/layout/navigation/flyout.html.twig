@@ -1,0 +1,44 @@
+{% block layout_navigation_flyout %}
+    {% set category = navigationTree.category %}
+    {% set categorId = category.id %}
+    {% set name = category.translated.name %}
+    {% set description = category.translated.description %}
+
+    {% block layout_navigation_flyout_content %}
+        <a class="{% if categorId is same as(page.header.navigation.active.id) %}text-gray-900 bg-sw-navigation-active rounded-lg dark:bg-gray-500{% endif %}
+        rounded-lg bg-transparent p-2 dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white
+        dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-sw-navigation-hover focus:bg-sw-navigation-hover focus:outline-none focus:shadow-outline"
+           href="{{ seoUrl('frontend.navigation.page', { navigationId: category.id }) }}"
+           title="{{ name }}"
+           itemprop="url">
+            <div class="grid grid-cols-1 gap-4">
+                <div class="flex flex row items-start">
+                    <p class="font-semibold">{{ name }}</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+                <div class="bg-teal-500 text-white rounded-lg mt-1">
+                    {% sw_thumbnails 'navigation-flyout-category-teaser-image-thumbnails' with {
+                        media: category.media,
+                        sizes: {
+                            'default': '160px'
+                        },
+                        attributes: {
+                            'class': 'object-contain',
+                            'alt': (category.media.translated.alt ?: ''),
+                            'title': (category.media.translated.title ?: ''),
+                            'data-object-fit': 'cover'
+                        }
+                    } %}
+                </div>
+                <div class="">
+                    {% if level == 1 %}
+                        <p class="text-sm">{{ description }}</p>
+                    {% else %}
+                        <p class="text-sm">{{ "general.toCategory"|trans|sw_sanitize }} {{ name }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{
+  "name": "swag/theme-skeleton",
+  "description": "Theme skeleton plugin",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Tailwind\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "Tailwind\\Tailwind",
+    "label": {
+      "de-DE": "Tailwind Theme plugin",
+      "en-GB": "Tailwind Theme plugin"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{% sw_extends '@Storefront/storefront/layout/meta.html.twig' %}
+
+{% block layout_head_stylesheet %}
+    <link rel="stylesheet" href="{{ asset('tailwindcss/css/app.css', '@Tailwind') }}">
+    {{ parent() }}
+{% endblock %}

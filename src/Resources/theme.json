@@ -1,0 +1,53 @@
+{
+  "name": "Tailwind",
+  "author": "BrocksiNet",
+  "views": [
+     "@Storefront",
+     "@Plugins",
+     "@Tailwind"
+  ],
+  "style": [
+    "app/storefront/src/scss/overrides.scss",
+    "app/storefront/src/scss/base.scss"
+  ],
+  "script": [
+    "@Storefront"
+  ],
+  "asset": [
+    "app/storefront/src/assets"
+  ],
+  "config": {
+    "blocks": {
+      "navigationColors": {
+        "label": {
+          "en-GB": "Navigation colours",
+          "de-DE": "Navigation-Farben"
+        }
+      }
+    },
+    "fields": {
+      "sw-navigation-hover-color": {
+        "label": {
+          "en-GB": "Navigation hover color",
+          "de-DE": "Navigation hover color"
+        },
+        "type": "color",
+        "value": "#b0dade",
+        "editable": true,
+        "block": "navigationColors",
+        "order": 100
+      },
+      "sw-navigation-active-color": {
+        "label": {
+          "en-GB": "Navigation active color",
+          "de-DE": "Navigation active color"
+        },
+        "type": "color",
+        "value": "#e7f2f3",
+        "editable": true,
+        "block": "navigationColors",
+        "order": 200
+      }
+    }
+  }
+}
