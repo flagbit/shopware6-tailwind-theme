@@ -1,0 +1,107 @@
+{% sw_extends '@Storefront/storefront/component/listing/filter/filter-rating.html.twig' %}
+
+{% set filterItemId = 'filter-' ~ name ~ '-' ~ random() %}
+
+{% if maxPoints is not defined %}
+    {% set maxPoints = 5 %}
+{% endif %}
+
+{% if filterRatingActiveLabelStart is not defined %}
+    {% set filterRatingActiveLabelStart = 'listing.filterRatingActiveLabelStart'|trans|sw_sanitize %}
+{% endif %}
+
+{% if filterRatingActiveLabelEndSingular is not defined %}
+    {% set filterRatingActiveLabelEndSingular = 'listing.filterRatingActiveLabelEndSingular'|trans|sw_sanitize %}
+{% endif %}
+
+{% if filterRatingActiveLabelEnd is not defined %}
+    {% set filterRatingActiveLabelEnd = 'listing.filterRatingActiveLabelEnd'|trans|sw_sanitize %}
+{% endif %}
+
+{% set filterRatingOptions = {
+    name: name,
+    maxPoints: maxPoints,
+    snippets: {
+        filterRatingActiveLabelStart: filterRatingActiveLabelStart,
+        filterRatingActiveLabelEndSingular: filterRatingActiveLabelEndSingular,
+        filterRatingActiveLabelEnd: filterRatingActiveLabelEnd,
+        disabledFilterText: 'listing.disabledFilterTooltip'|trans|sw_sanitize
+    }
+} %}
+
+{% block component_filter_rating %}
+    {% if shopware.config.core.listing.showReview %}
+        <div class="filter-rating filter-panel-item mr-1 mb-1{% if not sidebar %} relative inline-block{% endif %}"
+             x-data="{open:false}"
+             data-filter-rating="true"
+             data-filter-rating-options='{{ filterRatingOptions|json_encode }}'>
+
+            {% block component_filter_rating_toggle %}
+                <button class="filter-panel-item-toggle inline-block align-middle text-center select-none border font-normal
+                               whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline min-w-150{% if sidebar %} block w-full{% endif %}"
+                        aria-expanded="false"
+                        {% if sidebar %}
+                            data-toggle="collapse"
+                            data-target="#{{ filterItemId }}"
+                        {% else %}
+                            @click="open = true"
+                        {% endif %}>
+
+                    {% block component_filter_rating_display_name %}
+                        {{ displayName }}
+                    {% endblock %}
+
+                    {% block component_filter_rating_count %}
+                        <span class="filter-rating-count"></span>
+                    {% endblock %}
+
+                    {% block component_filter_rating_toggle_icon %}
+                        <span class="filter-panel-item-toggle">
+                        <svg fill="none" viewBox="0 0 20 20" stroke="currentColor" class="inline w-4 h-4 mb-1 ml-1 transition-transform duration-200 transform lg:-mt-1">
+                            <path x-show="!open" fill-rule="evenodd" clip-rule="evenodd" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            <path x-show="open" fill-rule="evenodd" clip-rule="evenodd" d="M18 12H6"></path>
+                        </svg>
+                    </span>
+                    {% endblock %}
+                </button>
+            {% endblock %}
+
+            {% block component_filter_rating_dropdown %}
+                <div class="filter-rating-dropdown filter-panel-item-dropdown{% if sidebar %} hidden{% else %}
+                            absolute left-0 z-50 float-left list-reset py-2 mt-1 text-base bg-white border border-gray-300 rounded max-h-9{% endif %}"
+                     id="{{ filterItemId }}" x-show="open" @click.away="open=false" x-transition:enter-start="transition ease-in duration-3000">
+
+                    {% block component_filter_rating_container %}
+                        <div class="filter-rating-container inline-block mx-1" data-rating-system="true">
+                            {% for point in 1..maxPoints %}
+
+                                {% block component_filter_rating_point_label %}
+                                    <label data-review-form-point="{{ point }}"
+                                           class="filter-rating-star float-left {% if currentPoints >= point %} is-active{% endif %}">
+
+                                        {% block component_filter_rating_point_radio %}
+                                            <input class="product-detail-review-form-radio ml-1 -mt-1"
+                                                   type="radio"
+                                                   name="points"
+                                                   value="{{ point }}">
+                                        {% endblock %}
+
+                                        {% block component_filter_rating_point_radio_element %}
+                                            {% sw_include '@Storefront/storefront/component/review/point.html.twig' with {
+                                                type: 'blank'
+                                            } %}
+                                        {% endblock %}
+                                    </label>
+                                {% endblock %}
+                            {% endfor %}
+
+                            {% block component_filter_rating_text_placeholder %}
+                                <div data-rating-text="true"></div>
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}

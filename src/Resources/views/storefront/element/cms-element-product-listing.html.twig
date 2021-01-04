@@ -1,0 +1,37 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-product-listing.html.twig' %}
+
+{% block element_product_listing %}
+    {# @var result \Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult #}
+    {% set searchResult = element.data.listing %}
+    {% set listingColumns = 'col-sm-6 col-lg-4 col-xl-3' %}
+
+    {% if section and section.type == 'sidebar' %}
+        {% set listingColumns = 'col-sm-6 col-lg-6 col-xl-4' %}
+    {% endif %}
+
+    {% set slot = page.cmsPage.firstElementOfType('product-listing') %}
+
+    {% set filterUrl = null %}
+    {% set dataUrl = null %}
+
+    {% if searchResult.currentFilters.navigationId %}
+        {% set filterUrl = url('frontend.cms.navigation.filter', { navigationId: searchResult.currentFilters.navigationId }) %}
+        {% set dataUrl = url('frontend.cms.navigation.page', { navigationId: searchResult.currentFilters.navigationId }) %}
+    {% endif %}
+
+    {% set sidebar = sectionType == 'sidebar' %}
+    {% set params = { slots: slot.id, 'no-aggregations': 1 } %}
+
+    {% block element_product_listing_wrapper %}
+        {% sw_include '@Storefront/storefront/component/product/listing.html.twig' with {
+            searchResult: searchResult,
+            dataUrl: dataUrl,
+            filterUrl: filterUrl,
+            params: params,
+            sidebar: sidebar,
+            boxLayout: element.translated.config.boxLayout.value,
+            displayMode: element.translated.config.displayMode.value,
+            listingColumns: listingColumns
+        } %}
+    {% endblock %}
+{% endblock %}

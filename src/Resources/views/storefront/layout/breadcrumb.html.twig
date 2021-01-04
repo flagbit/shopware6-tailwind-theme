@@ -1,0 +1,43 @@
+{% sw_extends '@Storefront/storefront/layout/breadcrumb.html.twig' %}
+
+{% block layout_breadcrumb_inner %}
+    <nav aria-label="breadcrumb">
+        {% block layout_breadcrumb_list %}
+            <ol class="flex flex-wrap list-reset pt-3 pb-3 py-4 px-4 mb-4 bg-gray-200 rounded"
+                itemscope
+                itemtype="https://schema.org/BreadcrumbList">
+                {% for breadcrumb in breadcrumbList %}
+                    {% set name = breadcrumb.translated.name %}
+                    {% set link = breadcrumb.link %}
+                    {% block layout_breadcrumb_list_item %}
+                        <li class="inline-block px-2 py-2 text-gray-700{% if loop.last %} active{% endif %}"
+                            {% if loop.last %}aria-current="page"{% endif %}
+                            itemprop="itemListElement"
+                            itemscope
+                            itemtype="https://schema.org/ListItem">
+                            {% if link %}
+                                <a href="{{ link }}"
+                                   class="breadcrumb-link"
+                                   title="{{ name }}"
+                                   itemprop="item">
+                                    <link itemprop="url"
+                                          href="{{ link }}"/>
+                                    <span class="breadcrumb-title"
+                                          itemprop="name">{{ name }}</span>
+                                </a>
+                            {% else %}
+                                <span class="breadcrumb-link"
+                                      itemprop="item">
+                                <span class="breadcrumb-title"
+                                      itemprop="name">{{ breadcrumb.name }}</span>
+                            </span>
+                            {% endif %}
+                            <meta itemprop="position"
+                                  content="{{ loop.index }}"/>
+                        </li>
+                    {% endblock %}
+                {% endfor %}
+            </ol>
+        {% endblock %}
+    </nav>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% sw_extends '@Storefront/storefront/block/cms-block-form.html.twig' %}
+
+{% block block_form %}
+    {% set element = block.slots.getSlot('content') %}
+    {% set columns = 1 %}
+
+    <div class="w-full" data-cms-element-id="{{ element.id }}">
+        {% block block_form_inner %}
+            {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig"  %}
+        {% endblock %}
+    </div>
+{% endblock %}

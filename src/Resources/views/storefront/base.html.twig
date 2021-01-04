@@ -13,8 +13,28 @@
 {% endblock %}
 
 {% block base_main %}
-    <main class="content-main">
+    <main class="content-main container mx-auto sm:px-4">
+        {% block base_flashbags %}
+            <div class="flashbags">
+                {% for type, messages in app.flashes %}
+                    {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with { type: type, list: messages } %}
+                {% endfor %}
+            </div>
+        {% endblock %}
 
+        {% block base_main_inner %}
+            {% block base_main_container %}
+                <div class="container-main">
+                    {% block base_breadcrumb %}
+                        {% if breadcrumbList %}
+                            {% sw_include '@Storefront/storefront/layout/breadcrumb.html.twig' %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block base_content %}{% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
     </main>
 {% endblock %}
 
@@ -23,7 +43,11 @@
 {% endblock %}
 
 {% block base_footer %}
-
+    <footer class="footer-main">
+        {% block base_footer_inner %}
+            {% sw_include '@Storefront/storefront/layout/footer/footer.html.twig' %}
+        {% endblock %}
+    </footer>
 {% endblock %}
 
 {% block base_scroll_up %}

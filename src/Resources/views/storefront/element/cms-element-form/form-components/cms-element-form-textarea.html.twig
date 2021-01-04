@@ -1,0 +1,30 @@
+{% sw_extends '@Storefront/storefront/element/form-components/cms-element-form-textarea.html.twig' %}
+
+{% block cms_element_form_textarea %}
+    <div class="mb-4 {{ additionalClass }}">
+        {% block cms_element_form_textarea_label %}
+            <label class="form-label" for="form-{{ fieldName }}">
+                {{ label|trans }}{% if required %} {{ "general.required"|trans }}{% endif %}
+            </label>
+        {% endblock %}
+
+        {% block cms_element_form_textarea_textarea %}
+            {% apply spaceless %}
+                <textarea name="{{ fieldName }}"
+                          id="form-{{ fieldName }}"
+                          placeholder="{{ placeholder|trans }}"
+                          {% if rows %}rows="{{ rows }}"{% endif %}
+                          {% if required %}required="required"{% endif %}
+                          class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded{% if formViolations.getViolations( '/' ~ fieldName ) %} bg-red-700{% endif %}">
+                    {{ data.get(fieldName) }}
+                </textarea>
+            {% endapply %}
+
+            {% if formViolations.getViolations( '/' ~ fieldName ) is not empty %}
+                {% sw_include '@Storefront/storefront/utilities/form-violation.html.twig' with {
+                    violationPath: ('/' ~ fieldName)
+                } %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

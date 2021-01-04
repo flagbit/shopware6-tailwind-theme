@@ -1,0 +1,60 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-form.html.twig' %}
+
+{% block element_form %}
+    {%  set config = element.fieldConfig.elements %}
+
+    <div class="cms-element-{{ element.type }}">
+        <div class="flex flex-wrap  justify-center">
+            <div class="lg:w-full pr-4 pl-4">
+
+                {% set formViolations = app.request.get('errors') %}
+
+                <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300">
+                    <div class="flex-auto p-6">
+                        {% block element_form_wrapper %}
+                            {% if element.config.type.value is same as('contact') %}
+                                {% block element_form_contact_form_title %}
+                                    <div class="mb-3 mb-4">
+                                        {% if element.config.title.value %}
+                                            {{ element.config.title.value }}
+                                        {%  else %}
+                                            {{ "contact.headline"|trans }}
+                                        {% endif %}
+                                    </div>
+                                {% endblock %}
+
+                                {% block element_form_contact_form_form %}
+                                    {% sw_include '@Storefront/storefront/element/cms-element-form/form-types/contact-form.html.twig'
+                                        with {
+                                            action: 'frontend.form.contact.send',
+                                            submitText: 'contact.formSubmit'
+                                        }
+                                    %}
+                                {% endblock %}
+                            {% elseif element.config.type.value is same as('newsletter') %}
+                                {% block element_form_newsletter_form_title %}
+                                    <div class="mb-3 mb-4">
+                                        {% if element.config.title.value %}
+                                            {{ element.config.title.value }}
+                                        {%  else %}
+                                            {{ "newsletter.headline"|trans }}
+                                        {% endif %}
+                                    </div>
+                                {% endblock %}
+
+                                {% block element_form_newsletter_form_form %}
+                                    {% sw_include '@Storefront/storefront/element/cms-element-form/form-types/newsletter-form.html.twig'
+                                        with {
+                                            action: 'frontend.form.newsletter.register.handle',
+                                            submitText: 'newsletter.formSubmit'
+                                        }
+                                    %}
+                                {% endblock %}
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

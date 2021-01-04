@@ -1,0 +1,25 @@
+{% sw_extends '@Storefront/storefront/block/cms-block-image-two-column.html.twig' %}
+
+{% block block_image_two_column %}
+    {% set columns = 2 %}
+    {% set id = element.id %}
+    {% block block_image_two_column_left %}
+        {% set element = block.slots.getSlot('left') %}
+
+        <div class="md:w-1/2 pr-4 pl-4" data-cms-element-id="{{ id }}">
+            {% block block_image_two_column_left_inner %}
+                {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block block_image_two_column_right %}
+        {% set element = block.slots.getSlot('right') %}
+
+        <div class="md:w-1/2 pr-4 pl-4" data-cms-element-id="{{ id }}">
+            {% block block_image_two_column_right_inner %}
+                {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

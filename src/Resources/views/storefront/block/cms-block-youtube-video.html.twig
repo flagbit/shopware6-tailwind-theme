@@ -1,0 +1,11 @@
+{% sw_extends '@Storefront/storefront/block/cms-block-youtube-video.html.twig' %}
+
+{% block block_youtube_video %}
+    {% set element = block.slots.getSlot('video') %}
+
+    <div class="w-full" data-cms-element-id="{{ element.id }}">
+        {% block block_image_inner %}
+            {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+        {% endblock %}
+    </div>
+{% endblock %}

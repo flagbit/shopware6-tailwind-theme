@@ -1,0 +1,34 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-sidebar-filter.html.twig' %}
+
+{% block element_sidebar_filter %}
+    {% set config = element.fieldConfig.elements %}
+    {% set slot = page.cmsPage.firstElementOfType('product-listing') %}
+
+    <div class="cms-element-sidebar-filter" x-data="{open:true}">
+        {% block element_product_listing_filter_button %}
+            <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded
+                           p-3 mr-2 leading-normal no-underline header-actions-btn filter-panel-wrapper-toggle lg:hidden"
+                    type="button"
+                    x-show="!open"
+                    @click="open = true">
+                <h3 class="filter-panel-offcanvas-only">
+                    {{ "listing.filterTitleText"|trans }}
+                </h3>
+                {% block element_product_listing_filter_button_icon %}
+                    {% sw_icon 'sliders-horizontal' %}
+                {% endblock %}
+            </button>
+        {% endblock %}
+
+        {% block element_sidebar_filter_panel %}
+            <div id="filter-panel-wrapper"
+                 class="filter-panel-wrapper"
+                 data-offcanvas-filter-content="true">
+                {% sw_include '@Storefront/storefront/component/listing/filter-panel.html.twig' with {
+                    listing: slot.data.listing,
+                    sidebar: block.sectionPosition == 'sidebar'
+                } %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

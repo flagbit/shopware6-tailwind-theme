@@ -1,0 +1,133 @@
+{% sw_extends '@Storefront/storefront/component/listing/filter/filter-range.html.twig' %}
+
+{% set filterItemId = 'filter-' ~ name ~ '-' ~ random() %}
+
+{% if currencySymbol is not defined %}
+    {% set currencySymbol = page.header.activeCurrency.symbol %}
+{% endif %}
+
+{% if filterRangeActiveMinLabel is not defined %}
+    {% set filterRangeActiveMinLabel = 'listing.filterRangeActiveMinLabel'|trans|sw_sanitize %}
+{% endif %}
+
+{% if filterRangeActiveMaxLabel is not defined %}
+    {% set filterRangeActiveMaxLabel = 'listing.filterRangeActiveMaxLabel'|trans|sw_sanitize %}
+{% endif %}
+
+{% if filterRangeErrorMessage is not defined %}
+    {% set filterRangeErrorMessage = 'listing.filterRangeErrorMessage'|trans|sw_sanitize %}
+{% endif %}
+
+{% set filterRangeOptions = {
+    name: name,
+    minKey: minKey,
+    maxKey: maxKey,
+    currencySymbol: currencySymbol,
+    snippets: {
+        filterRangeActiveMinLabel: filterRangeActiveMinLabel,
+        filterRangeActiveMaxLabel: filterRangeActiveMaxLabel,
+        filterRangeErrorMessage: filterRangeErrorMessage
+    }
+} %}
+
+{% block component_filter_range %}
+    <div class="filter-range filter-panel-item mr-1 mb-1{% if not sidebar %} relative inline-block{% endif %}"
+         x-data="{open:false}"
+         data-filter-range="true"
+         data-filter-range-options='{{ filterRangeOptions|json_encode }}'>
+
+        {% block component_filter_range_toggle %}
+            <button class="filter-panel-item-toggle align-middle text-center select-none border font-normal
+                           whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline{% if sidebar %} block w-full{% endif %}"
+                    aria-expanded="false"
+                    {% if sidebar %}
+                    data-toggle="collapse"
+                    data-target="#{{ filterItemId }}"
+                    {% else %}
+                        @click="open = true"
+                    {% endif %}>
+
+                {% block component_filter_range_display_name %}
+                    {{ displayName }}
+                {% endblock %}
+
+                {% block component_filter_range_toggle_icon %}
+                    <span class="filter-panel-item-toggle">
+                        <svg fill="none" viewBox="0 0 20 20" stroke="currentColor" class="inline w-4 h-4 mb-1 ml-1 transition-transform duration-200 transform lg:-mt-1">
+                            <path x-show="!open" fill-rule="evenodd" clip-rule="evenodd" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            <path x-show="open" fill-rule="evenodd" clip-rule="evenodd" d="M18 12H6"></path>
+                        </svg>
+                    </span>
+                {% endblock %}
+            </button>
+        {% endblock %}
+
+        {% block component_filter_range_dropdown %}
+            <div class="filter-range-dropdown filter-panel-item-dropdown{% if sidebar %} hidden{% else %} absolute
+                        left-0 z-50 float-left list-reset py-2 mt-1 text-base bg-white border border-gray-300 rounded{% endif %}"
+                 id="{{ filterItemId }}" x-show="open" @click.away="open=false" x-transition:enter-start="transition ease-in duration-3000">
+
+                {% block component_filter_range_container %}
+                    <div class="filter-range-container grid grid-cols-9 gap-4 min-w-300">
+
+                        {% block component_filter_range_min %}
+                            <div class="col-span-4 inline m-2">
+                                <label class="filter-range-min">
+
+                                    {% block component_filter_range_min_label %}
+                                        {{ 'listing.filterRangeMinLabel'|trans|sw_sanitize }}
+                                    {% endblock %}
+
+                                    {% block component_filter_range_min_input %}
+                                        <input class="block appearance-none max-w-3xs py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded min-input float-left"
+                                               type="number"
+                                               name="min-price"
+                                               min="0"
+                                               max="{{ price.max }}">
+                                    {% endblock %}
+
+                                    {% block component_filter_range_min_currency_symbol %}
+                                        <span class="filter-range-currency-symbol float-left m-1">
+                                            {{ currencySymbol }}
+                                        </span>
+                                    {% endblock %}
+                                </label>
+                            </div>
+                        {% endblock %}
+
+                        {% block component_filter_range_divider %}
+                            <div class="filter-range-divider col-span-1 inline mt-7">
+                                &ndash;
+                            </div>
+                        {% endblock %}
+
+                        {% block component_filter_range_max %}
+                            <div class="col-span-4 inline m-2">
+                                <label class="filter-range-max">
+
+                                    {% block component_filter_range_max_label %}
+                                        {{ 'listing.filterRangeMaxLabel'|trans|sw_sanitize }}
+                                    {% endblock %}
+
+                                    {% block component_filter_range_max_input %}
+                                        <input class="block appearance-none max-w-3xs py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded max-input float-left"
+                                               type="number"
+                                               name="max-price"
+                                               min="0"
+                                               max="{{ price.max }}">
+                                    {% endblock %}
+
+                                    {% block component_filter_range_max_currency_symbol %}
+                                        <span class="filter-range-currency-symbol float-left m-1">
+                                            {{ currencySymbol }}
+                                        </span>
+                                    {% endblock %}
+                                </label>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

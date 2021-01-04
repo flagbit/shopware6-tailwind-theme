@@ -1,0 +1,72 @@
+{% sw_extends '@Storefront/storefront/component/listing/filter/filter-multi-select.html.twig' %}
+
+{% set filterItemId = 'filter-' ~ name ~ '-' ~ random() %}
+
+{% if pluginSelector is not defined %}
+    {% set pluginSelector = 'filter-multi-select' %}
+{% endif %}
+
+{% if dataPluginSelectorOptions is not defined %}
+    {% set dataPluginSelectorOptions = {
+        name: name,
+        snippets: {
+            disabledFilterText: 'listing.disabledFilterTooltip'|trans|sw_sanitize
+        }
+    } %}
+{% endif %}
+
+{% block component_filter_multi_select %}
+    <div class="filter-multi-select filter-multi-select-{{ name }} filter-panel-item mr-1 mb-1{% if not sidebar %} relative inline-block{% endif %}"
+         x-data="{open:false}"
+         data-{{ pluginSelector }}="true"
+         data-{{ pluginSelector }}-options='{{ dataPluginSelectorOptions|json_encode }}'>
+
+        {% block component_filter_multi_select_toggle %}
+            <button class="filter-panel-item-toggle align-middle text-center select-none border font-normal
+                           whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline{% if sidebar %} block w-full{% endif %}"
+                    {% if sidebar %}
+                    data-toggle="collapse"
+                    data-target="#{{ filterItemId }}"
+                    {% else %}
+                        @click="open = true"
+                    {% endif %}>
+
+                {% block component_filter_multi_select_display_name %}
+                    {{ displayName }}
+                {% endblock %}
+
+                {% block component_filter_multi_select_count %}
+                    <span class="filter-multi-select-count"></span>
+                {% endblock %}
+
+                {% block component_filter_multi_select_toggle_icon %}
+                    <span class="filter-panel-item-toggle">
+                        <svg fill="none" viewBox="0 0 20 20" stroke="currentColor" class="inline w-4 h-4 mb-1 ml-1 transition-transform duration-200 transform lg:-mt-1">
+                            <path x-show="!open" fill-rule="evenodd" clip-rule="evenodd" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            <path x-show="open" fill-rule="evenodd" clip-rule="evenodd" d="M18 12H6"></path>
+                        </svg>
+                    </span>
+                {% endblock %}
+            </button>
+        {% endblock %}
+
+        {% block component_filter_multi_select_dropdown %}
+            <div class="filter-multi-select-dropdown filter-panel-item-dropdown{% if sidebar %} hidden{% else %} absolute left-0 z-50 float-left list-reset py-2 mt-1 text-base bg-white border border-gray-300 rounded{% endif %}"
+                 id="{{ filterItemId }}" x-show="open" @click.away="open=false" x-transition:enter-start="transition ease-in duration-3000">
+                {% block component_filter_multi_select_list %}
+                    <ul class="filter-multi-select-list whitespace-nowrap">
+                        {% for element in elements %}
+                            {% block component_filter_multi_select_list_item %}
+                                <li class="filter-multi-select-list-item p-1">
+                                    {% block component_filter_multi_select_list_item_inner %}
+                                        {% sw_include '@Storefront/storefront/component/listing/filter/filter-multi-select-list-item.html.twig' %}
+                                    {% endblock %}
+                                </li>
+                            {% endblock %}
+                        {% endfor %}
+                    </ul>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

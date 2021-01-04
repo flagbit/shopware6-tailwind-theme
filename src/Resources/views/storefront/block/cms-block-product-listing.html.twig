@@ -1,0 +1,12 @@
+{% sw_extends '@Storefront/storefront/block/cms-block-product-listing.html.twig' %}
+
+{% block block_product_listing %}
+    {% set element = block.slots.getSlot('content') %}
+    {% set columns = 1 %}
+
+    <div class="w-full" data-cms-element-id="{{ element.id }}">
+        {% block block_product_listing_inner %}
+            {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+        {% endblock %}
+    </div>
+{% endblock %}
