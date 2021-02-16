@@ -1,0 +1,42 @@
+{% sw_extends '@Storefront/storefront/layout/header/search.html.twig' %}
+
+{% block layout_header_search %}
+    <div class="hidden"
+         id="searchCollapse">
+        <div class="header-search">
+            <form action="{{ path('frontend.search.page') }}"
+                  method="get"
+                  data-search-form="true"
+                  data-url="{{ path('frontend.search.suggest') }}?search="
+                  class="header-search-form">
+                {% block layout_header_search_input_group %}
+                    <div class="relative flex items-stretch w-full">
+                        {% block layout_header_search_input %}
+                            <input type="search"
+                                   name="search"
+                                   class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded header-search-input"
+                                   autocomplete="off"
+                                   autocapitalize="off"
+                                   placeholder="{{ "header.searchPlaceholder"|trans|striptags }}"
+                                   aria-label="{{ "header.searchPlaceholder"|trans|striptags }}"
+                                   value="{{ page.searchTerm }}"
+                            >
+                        {% endblock %}
+
+                        {% block layout_header_search_button %}
+                            <div class="input-group-append">
+                                <button type="submit"
+                                        class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline header-search-btn"
+                                        aria-label="{{ "header.searchButton"|trans|striptags }}">
+                                    <span class="header-search-icon">
+                                        {% sw_icon 'search' %}
+                                    </span>
+                                </button>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

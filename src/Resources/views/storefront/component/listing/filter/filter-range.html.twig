@@ -65,7 +65,7 @@
         {% block component_filter_range_dropdown %}
             <div class="filter-range-dropdown filter-panel-item-dropdown{% if sidebar %} hidden{% else %} absolute
                         left-0 z-50 float-left list-reset py-2 mt-1 text-base bg-white border border-gray-300 rounded{% endif %}"
-                 id="{{ filterItemId }}" x-show="open" @click.away="open=false" x-transition:enter-start="transition ease-in duration-3000">
+                 id="{{ filterItemId }}" x-show="open" @click.away="open=false" x-transition:enter-start="transition ease-in duration-3000" x-cloak>
 
                 {% block component_filter_range_container %}
                     <div class="filter-range-container grid grid-cols-9 gap-4 min-w-300">
@@ -79,7 +79,7 @@
                                     {% endblock %}
 
                                     {% block component_filter_range_min_input %}
-                                        <input class="block appearance-none max-w-3xs py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded min-input float-left"
+                                        <input class="block appearance-none max-w-6xs py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded min-input float-left"
                                                type="number"
                                                name="min-price"
                                                min="0"
@@ -110,7 +110,7 @@
                                     {% endblock %}
 
                                     {% block component_filter_range_max_input %}
-                                        <input class="block appearance-none max-w-3xs py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded max-input float-left"
+                                        <input class="block appearance-none max-w-6xs py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded max-input float-left"
                                                type="number"
                                                name="max-price"
                                                min="0"

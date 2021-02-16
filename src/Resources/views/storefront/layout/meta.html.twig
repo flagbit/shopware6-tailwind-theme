@@ -1,5 +1,23 @@
 {% sw_extends '@Storefront/storefront/layout/meta.html.twig' %}
 
+{% block layout_head_meta_tags_general %}
+    {% if metaDescription is empty %}
+        {% set metaDescription = basicConfig.shopName ~ " " ~ metaTitle %}
+    {% endif %}
+
+    <meta name="author"
+          content="{{ metaInformation.author|striptags }}"/>
+    <meta name="robots"
+          content="{% block layout_head_meta_tags_robots %}{{ metaInformation.robots }}{% endblock %}"/>
+    <meta name="revisit-after"
+          content="{{ metaInformation.revisit|striptags }}"/>
+    <meta name="keywords"
+          content="{% block layout_head_meta_tags_keywords %}{{ metaKeywords }}{% endblock %}"/>
+    <meta name="description"
+          content="{% block layout_head_meta_tags_description %}{{ metaDescription }}{% endblock %}"
+    />
+{% endblock %}
+
 {% block layout_head_stylesheet %}
     <link rel="stylesheet" href="{{ asset('tailwindcss/css/app.css', '@Tailwind') }}">
     {{ parent() }}

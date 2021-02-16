@@ -1,0 +1,19 @@
+{% sw_extends '@Storefront/storefront/layout/header/actions/account-widget.html.twig' %}
+
+{% block layout_header_actions_account_widget %}
+    <div class="relative" x-data="{ isOpen: false }">
+        {% block layout_header_actions_account_widget_dropdown_button %}
+            <button class="inline-block align-middle text-center select-none font-normal whitespace-no-wrap py-1 px-3 focus:outline-none"
+                    type="button"
+                    x-on:click="isOpen = !isOpen"
+            {% sw_icon 'avatar' %}
+            </button>
+        {% endblock %}
+
+        {% block layout_header_actions_account_widget_dropdown_menu %}
+            <div x-show="isOpen" @click.away="isOpen = !isOpen" x-cloak class="absolute z-50 list-reset py-2 mt-1 text-base bg-white dropdown-menu-right account-menu-dropdown js-account-menu-dropdown">
+                {% sw_include '@Storefront/storefront/layout/header/account-menu.html.twig' %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

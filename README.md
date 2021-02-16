@@ -9,7 +9,7 @@ This is a **proof of concept**. This is still in progress. :warning: Do not use 
 ## Installation
 
 ### Install required node_modules
-`yarn install`
+`yarn install` (use node version >= 15.8.0)
 
 ## Build process
 

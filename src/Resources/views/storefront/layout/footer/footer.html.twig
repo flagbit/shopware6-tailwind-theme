@@ -1,0 +1,205 @@
+{% sw_extends '@Storefront/storefront/layout/footer/footer.html.twig' %}
+
+{% block layout_footer_inner_container %}
+    {% block layout_footer_navigation %}
+        <div id="footerColumns" class="flex flex-wrap footer-columns">
+            {% block layout_footer_navigation_hotline %}
+                <div class="container mx-auto px-2 py-2" x-data="{
+                    contents: [
+                        {
+                            title: '{{ 'footer.serviceHotlineHeadline'|trans|sw_sanitize }}',
+                            innerHtml: '<p>{{ 'footer.serviceHotline'|trans|sw_sanitize|escape }}</p> <p>{{ 'footer.serviceContactLink'|trans({
+                    '%url%': path('frontend.cms.page', { id: shopware.config.core.basicInformation.contactPage })
+                })|raw|escape }}</p>',
+                            isOpen: true,
+                        }
+                    ]
+                }">
+                    <div class="leading-loose text-lg mt-6">
+                        <template x-for="content in contents" :key="content.title">
+                            <div>
+                                <button class="w-full font-bold border-b border-gray-400 py-3 flex justify-between items-center mt-4 focus:outline-none"
+                                        @click="contents = contents.map(c => ({ ...c, isOpen: c.title !== content.title ? false : !c.isOpen}))">
+                                    <!-- Specs has it that only one component can be open at a time and also you should be able to toggle the open state of the active component too -->
+                                    <div x-text="content.title"></div>
+                                    <svg x-show="!content.isOpen" class="fill-current" viewBox="0 0 24 24" width="20" height="20">
+                                        <path class="heroicon-ui"
+                                              d="M12 22a10 10 0 110-20 10 10 0 010 20zm0-2a8 8 0 100-16 8 8 0 000 16zm1-9h2a1 1 0 010 2h-2v2a1 1 0 01-2 0v-2H9a1 1 0 010-2h2V9a1 1 0 012 0v2z" />
+                                    </svg>
+                                    <svg x-show="content.isOpen" class="fill-current" viewBox="0 0 24 24" width="20" height="20">
+                                        <path class="heroicon-ui"
+                                              d="M12 22a10 10 0 110-20 10 10 0 010 20zm0-2a8 8 0 100-16 8 8 0 000 16zm4-8a1 1 0 01-1 1H9a1 1 0 010-2h6a1 1 0 011 1z" />
+                                    </svg>
+                                </button>
+
+                                <div class="text-gray-700 text-sm mt-2" x-html="content.innerHtml" x-show="content.isOpen"></div>
+                            </div>
+                        </template>
+
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block layout_footer_navigation_columns %}
+                {% for root in page.footer.navigation.tree %}
+                    {% block layout_footer_navigation_column %}
+                        <div class="md:w-1/3 pr-4 pl-4 footer-column js-footer-column">
+                            {% block layout_footer_navigation_information_headline %}
+                                <div class="footer-column-headline footer-headline js-collapse-footer-column-trigger"
+                                     data-target="#collapseFooterTitle{{ loop.index }}"
+                                     aria-expanded="true"
+                                     aria-controls="collapseFooter{{ loop.index }}">
+
+                                    {{ root.category.translated.name }}
+                                    {% block layout_footer_navigation_information_icons %}
+                                        <div class="footer-column-toggle">
+                                            <span class="footer-plus-icon">
+                                                {% sw_icon 'plus' %}
+                                            </span>
+                                            <span class="footer-minus-icon">
+                                                {% sw_icon 'minus' %}
+                                            </span>
+                                        </div>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+
+                            {% block layout_footer_navigation_information_content %}
+                                <div id="collapseFooter{{ loop.index }}"
+                                     class="footer-column-content hidden js-footer-column-content"
+                                     aria-labelledby="collapseFooterTitle{{ loop.index }}">
+                                    <div class="footer-column-content-inner">
+                                        {% block layout_footer_navigation_information_links %}
+                                            <ul class="list-unstyled">
+                                                {% for treeItem in root.children %}
+                                                    {% set category = treeItem.category %}
+                                                    {% set name = category.translated.name %}
+                                                    {% set externalLink = category.translated.externalLink %}
+                                                    {% block layout_footer_navigation_information_link_item %}
+                                                        <li class="footer-link-item">
+                                                            {% block layout_footer_navigation_information_link %}
+                                                                <a class="footer-link"
+                                                                   href="{% if externalLink %}{{ externalLink }}{% else %}{{ seoUrl('frontend.navigation.page', { navigationId: category.id }) }}{% endif %}"
+                                                                   title="{{ name }}">
+                                                                    {{ name }}
+                                                                </a>
+                                                            {% endblock %}
+                                                        </li>
+                                                    {% endblock %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% endblock %}
+                                    </div>
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block layout_footer_payment_shipping_logos %}
+        <!-- footer-logos -->
+        <div>
+            {% block layout_footer_payment_logos %}
+                {% for paymentMethod in page.salesChannelPaymentMethods %}
+                    {% block layout_footer_payment_logo %}
+                        {% if paymentMethod.media %}
+                            <div class="footer-logo is-payment">
+                                {% sw_thumbnails 'footer-payment-image-thumbnails' with {
+                                    media: paymentMethod.media,
+                                    sizes: {
+                                        'default': '100px'
+                                    },
+                                    attributes: {
+                                        'class': 'img-fluid footer-logo-image',
+                                        'alt': (paymentMethod.media.translated.alt ?: paymentMethod.translated.name),
+                                        'title': (paymentMethod.media.translated.title ?: paymentMethod.translated.name)
+                                    }
+                                } %}
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
+
+            {% block layout_footer_shipping_logos %}
+                {% for shippingMethod in page.salesChannelShippingMethods %}
+                    {% block layout_footer_shipping_logo %}
+                        {% if shippingMethod.media %}
+                            <div class="footer-logo is-shipping">
+                                {% sw_thumbnails 'footer-shipping-image-thumbnails' with {
+                                    media: shippingMethod.media,
+                                    sizes: {
+                                        'default': '100px'
+                                    },
+                                    attributes: {
+                                        'class': 'img-fluid footer-logo-image',
+                                        'alt': (shippingMethod.media.translated.alt ?: shippingMethod.translated.name),
+                                        'title': (shippingMethod.media.translated.title ?: shippingMethod.translated.name)
+                                    }
+                                } %}
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block layout_footer_bottom %}
+        <!-- footer-bottom -->
+        <div>
+            {% block layout_footer_service_menu %}
+                {% if page.header.serviceMenu is not empty %}
+                    <div class="container mx-auto sm:px-4">
+                        {% block layout_footer_service_menu_content %}
+                            <!-- footer-service-menu-list list-unstyled -->
+                            <ul>
+                                {% for serviceMenuItem in page.header.serviceMenu %}
+                                    {% block layout_footer_service_menu_item %}
+                                        <li class="footer-service-menu-item">
+                                            <a class="footer-service-menu-link"
+                                               href="{% if serviceMenuItem.externalLink %}{{ serviceMenuItem.externalLink }}{% else %}{{ seoUrl('frontend.navigation.page', { navigationId: serviceMenuItem.id }) }}{% endif %}"
+                                               title="{{ serviceMenuItem.translated.name }}">
+                                                {{ serviceMenuItem.translated.name }}
+                                            </a>
+                                        </li>
+                                    {% endblock %}
+                                {% endfor %}
+                            </ul>
+                        {% endblock %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block layout_footer_vat %}
+                <!-- footer-vat -->
+                <div class="flex justify-center">
+                    {% if context.taxState == "gross" %}
+                        <p>
+                            {{ "footer.includeVat"|trans({
+                                '%url%': path('frontend.cms.page',{ id: shopware.config.core.basicInformation.shippingPaymentInfoPage })
+                            })|raw }}
+                        </p>
+                    {% else %}
+                        <p>
+                            {{ "footer.excludeVat"|trans({
+                                '%url%': path('frontend.cms.page',{ id: shopware.config.core.basicInformation.shippingPaymentInfoPage })
+                            })|raw }}
+                        </p>
+                    {% endif %}
+                </div>
+            {% endblock %}
+
+            {% block layout_footer_copyright %}
+                <!-- footer-copyright -->
+                <div class="flex justify-center my-2">
+                    <div class="float-left mx-2">{% sw_icon 'shopware' style {'size':'xs'} %}</div>
+                    {{ "footer.copyrightInfo"|trans|sw_sanitize }}
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

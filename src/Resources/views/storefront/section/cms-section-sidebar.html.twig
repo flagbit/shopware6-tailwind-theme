@@ -1,0 +1,34 @@
+{% sw_extends '@Storefront/storefront/section/cms-section-sidebar.html.twig' %}
+
+{% block page_content_section_sidebar %}
+    {% set sectionMobileBehaviorClass = 'cms-section-sidebar-mobile-' ~ section.mobileBehavior %}
+    {% set layout = section.sizingMode ? section.sizingMode|replace({"_": "-"}) : "container" %}
+
+    <div class="cms-section-sidebar {{ sectionMobileBehaviorClass }} {{ layout }} flex flex-wrap ">
+
+        {% set sidebarBlocks = section.blocks.filterBySectionPosition('sidebar') %}
+        {% set mainContentBlocks = section.blocks.filterBySectionPosition('main') %}
+
+        {% block section_sidebar_content %}
+            <div class="cms-section-sidebar-sidebar-content lg:w-1/3 pr-4 pl-4 xl:w-1/4 pr-4 pl-4">
+
+                {% for block in sidebarBlocks %}
+                    {% block section_sidebar_content_block %}
+                        {% sw_include "@Storefront/storefront/section/cms-section-block-container.html.twig" %}
+                    {% endblock %}
+                {% endfor %}
+            </div>
+        {% endblock %}
+
+        {% block section_main_content %}
+            <div class="cms-section-sidebar-main-content lg:w-2/3 pr-4 pl-4 xl:w-3/4 pr-4 pl-4">
+
+                {% for block in mainContentBlocks %}
+                    {% block section_main_content_block %}
+                        {% sw_include "@Storefront/storefront/section/cms-section-block-container.html.twig" %}
+                    {% endblock %}
+                {% endfor %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

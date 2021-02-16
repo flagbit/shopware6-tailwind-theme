@@ -1,0 +1,36 @@
+{% sw_extends '@Storefront/storefront/layout/header/actions/service-menu-widget.html.twig' %}
+
+{% block layout_header_actions_service_menu_widget %}
+    {% if position is empty %}
+        {% set position = 'top-bar' %}
+    {% endif %}
+
+    {% if page.header.serviceMenu|length > 0 %}
+        <div class="top-bar-nav-item top-bar-menu">
+            {% block layout_header_actions_service_menu_list %}
+                <div class="service-menu relative">
+                    <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline inline-block w-0 h-0 ml-1 align border-b-0 border-t-1 border-r-1 border-l-1 top-bar-nav-btn"
+                            type="button"
+                            id="serviceMenuDropdown-{{ position }}"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        {% sw_icon 'help' %}
+                        <span class="top-bar-nav-text">{{ "header.indexLinkService"|trans|sw_sanitize }}</span>
+                    </button>
+                    {% block layout_header_actions_service_menu_items %}
+                        <div class=" absolute left-0 z-50 float-left hidden list-reset py-2 mt-1 text-base bg-white border border-gray-300 rounded dropdown-menu-right"
+                             aria-labelledby="serviceMenuDropdown-{{ position }}">
+                            {% for category in page.header.serviceMenu %}
+                                {% set externalLink = category.translated.externalLink %}
+                                <a class="top-bar-list-item block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0"
+                                   href="{% if externalLink %}{{ externalLink }}{% else %}{{ seoUrl('frontend.navigation.page', { navigationId: category.id }) }}{% endif %}"
+                                   title="{{ category.translated.name }}">{{ category.translated.name }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}

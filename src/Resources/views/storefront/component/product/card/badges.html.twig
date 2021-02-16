@@ -1,0 +1,31 @@
+{% sw_extends '@Storefront/storefront/component/product/card/badges.html.twig' %}
+
+{% block component_product_badges %}
+    <div class="product-badges">
+        {% block component_product_badges_discount %}
+            {% set listPrice = product.priceRange or product.calculatedPrices.count > 0 ? null : product.calculatedPrice.listPrice.percentage > 0 %}
+
+            {% if listPrice %}
+                <div class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-red-600 text-white hover:bg-red-700 badge-discount">
+                    <span>&#37;</span>
+                </div>
+            {% endif %}
+        {% endblock %}
+
+        {% block component_product_badges_topseller %}
+            {% if product.markAsTopseller %}
+                <div>
+                    <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-orange-400 text-black hover:bg-orange-500 badge-topseller">{{ "listing.boxLabelTopseller"|trans|sw_sanitize }}</span>
+                </div>
+            {% endif %}
+        {% endblock %}
+
+        {% block component_product_badges_new %}
+            {% if product.isNew %}
+                <div>
+                    <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-green-500 text-white hover:green-600 badge-new">{{ "listing.boxLabelNew"|trans|sw_sanitize }}</span>
+                </div>
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

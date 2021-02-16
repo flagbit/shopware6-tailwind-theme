@@ -1,0 +1,92 @@
+{% sw_extends '@Storefront/storefront/page/account/sidebar.html.twig' %}
+
+{% block page_account_sidebar_inner %}
+    <div class="{% if not headerWidget %}account-aside{% else %}header-account-menu{% endif %}">
+        <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 account-menu-inner">
+            {% block page_account_sidebar_header %}
+                {% if not headerWidget %}
+                    <div class="py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900 account-aside-header">
+                        {{ "account.greetings"|trans|sw_sanitize }}
+                        {{ context.customer.title }}
+                        {{ context.customer.firstName }}
+                        {{ context.customer.lastName }}
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block page_account_sidebar_menu %}
+                {% if not context.customer.guest %}
+                    <div class="flex flex-col pl-0 mb-0 border rounded border-gray-300  account-aside-list-group">
+                        {% block page_account_sidebar_menu_inner %}
+                            {% block page_account_sidebar_link_home %}
+                                <a href="{{ path('frontend.account.home.page') }}"
+                                   title="{{ "account.overviewLink"|trans|striptags }}"
+                                   class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline account-aside-item{% if controllerName is same as('AccountProfile') and controllerAction is same as('index') %} is-active{% endif %}">
+                                    {{ "account.overviewLink"|trans|sw_sanitize }}
+                                </a>
+                            {% endblock %}
+
+                            {% block page_account_sidebar_link_profile %}
+                                <a href="{{ path('frontend.account.profile.page') }}"
+                                   title="{{ "account.profileLink"|trans|striptags }}"
+                                   class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline account-aside-item{% if controllerName is same as('AccountProfile') and controllerAction is same as('profileOverview') %} is-active{% endif %}">
+                                    {{ "account.profileLink"|trans|sw_sanitize }}
+                                </a>
+                            {% endblock %}
+
+                            {% block page_account_sidebar_link_address %}
+                                <a href="{{ path('frontend.account.address.page') }}"
+                                   title="{{ "account.addressLink"|trans|striptags }}"
+                                   class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline account-aside-item{% if controllerName is same as('Address') and controllerAction is same as('accountAddressOverview') %} is-active{% endif %}">
+                                    {{ "account.addressLink"|trans|sw_sanitize }}
+                                </a>
+                            {% endblock %}
+
+                            {% block page_account_sidebar_link_payment %}
+                                <a href="{{ path('frontend.account.payment.page') }}"
+                                   title="{{ "account.paymentLink"|trans|striptags }}"
+                                   class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline account-aside-item{% if controllerName is same as('AccountPayment') and controllerAction is same as('paymentOverview') %} is-active{% endif %}">
+                                    {{ "account.paymentLink"|trans|sw_sanitize }}
+                                </a>
+                            {% endblock %}
+
+                            {% block page_account_sidebar_link_orders %}
+                                <a href="{{ path('frontend.account.order.page') }}"
+                                   title="{{ "account.ordersLink"|trans|striptags }}"
+                                   class="relative block py-3 px-6 -mb-px border border-r-0 border-l-0 border-gray-300 no-underline account-aside-item{% if controllerName is same as('AccountOrder') and controllerAction is same as('orderOverview') %} is-active{% endif %}">
+                                    {{ "account.ordersLink"|trans|sw_sanitize }}
+                                </a>
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block page_account_sidebar_footer %}
+                {% if context.customer %}
+                    {% if not context.customer.guest %}
+                        <div class="py-3 px-6 bg-gray-200 border-t-1 border-gray-300 account-aside-footer">
+                            {% block page_account_sidebar_logout %}
+                                <a href="{{ path('frontend.account.logout.page') }}"
+                                   class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline font-normal text-blue-700 bg-transparent account-aside-btn">
+                                    {% sw_icon 'log-out' %}
+                                    {{ "account.logout"|trans|sw_sanitize }}
+                                </a>
+                            {% endblock %}
+                        </div>
+                    {% else %}
+                        <div class="py-3 px-6 bg-gray-200 border-t-1 border-gray-300 account-aside-footer account-guest-abort">
+                            {% block page_account_sidebar_guest_abort %}
+                                <a href="{{ path('frontend.account.logout.page') }}"
+                                   class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline font-normal text-blue-700 bg-transparent account-aside-btn">
+                                    {% sw_icon 'log-out' %}
+                                    {{ "account.guestAbort"|trans|sw_sanitize }}
+                                </a>
+                            {% endblock %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

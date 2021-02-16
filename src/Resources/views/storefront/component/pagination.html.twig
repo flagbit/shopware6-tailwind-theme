@@ -1,0 +1,159 @@
+{% sw_extends '@Storefront/storefront/component/pagination.html.twig' %}
+
+{% block component_pagination_nav %}
+    {% set currentPage = ((criteria.offset + 1) / criteria.limit )|round(0, 'ceil') %}
+    {% set totalPages = (entities.total / criteria.limit)|round(0, 'ceil') %}
+    {% set labelClasses = "relative block -ml-px leading-normal text-blue bg-white border border-gray-200 no-underline rounded mr-2 mb-2 dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-sw-navigation-hover focus:bg-sw-navigation-hover focus:outline-none focus:shadow-outline" %}
+
+    {% if totalPages > 1 %}
+        <nav aria-label="pagination" class="pagination-nav">
+            {% block component_pagination %}
+                <ul class="pagination flex list-reset pl-0 rounded">
+                    {% block component_pagination_first %}
+                        <li class="page-item page-first{% if currentPage == 1 %} opacity-75{% endif %}">
+                            {% block component_pagination_first_input %}
+                                <input type="radio"
+                                       {% if currentPage == 1 %}disabled="disabled"{% endif %}
+                                       name="p"
+                                       id="p-first"
+                                       value="1"
+                                       class="hidden"
+                                       title="pagination">
+                            {% endblock %}
+
+                            {% block component_pagination_first_label %}
+                                <label class="{{ labelClasses }} py-2 px-3" for="p-first">
+                                    {% block component_pagination_first_link %}
+                                        {% sw_icon 'arrow-medium-double-left' style { 'size': 'fluid', 'pack': 'solid'} %}
+                                    {% endblock %}
+                                </label>
+                            {% endblock %}
+                        </li>
+                    {% endblock %}
+
+                    {% block component_pagination_prev %}
+                        <li class="page-item page-prev{% if currentPage == 1 %} opacity-75{% endif %}">
+                            {% block component_pagination_prev_input %}
+                                <input type="radio"
+                                       {% if currentPage == 1 %}disabled="disabled"{% endif %}
+                                       name="p"
+                                       id="p-prev"
+                                       value="{{ currentPage - 1 }}"
+                                       class="hidden"
+                                       title="pagination">
+                            {% endblock %}
+
+                            {% block component_pagination_prev_label %}
+                                <label class="{{ labelClasses }} py-2 px-3" for="p-prev">
+                                    {% block component_pagination_prev_link %}
+                                        {% block component_pagination_prev_icon %}
+                                            {% sw_icon 'arrow-medium-left' style {'size': 'fluid', 'pack': 'solid'} %}
+                                        {% endblock %}
+                                    {% endblock %}
+                                </label>
+                            {% endblock %}
+                        </li>
+                    {% endblock %}
+
+                    {% block component_pagination_loop %}
+                        {% set start = currentPage - 2 %}
+                        {% if start <= 0 %}
+                            {% set start = currentPage - 1 %}
+                            {% if start <= 0 %}
+                                {% set start = currentPage %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% set end = start + 4 %}
+
+                        {% if end > totalPages %}
+                            {% set end = totalPages %}
+                        {% endif %}
+
+                        {% for page in start..end %}
+
+                            {% set isActive = (currentPage == page) %}
+
+                            {% block component_pagination_item %}
+                                <li class="page-item{% if isActive %} active{% endif %}">
+                                    {% block component_pagination_item_input %}
+                                        <input type="radio"
+                                               name="p"
+                                               id="p{{ page }}"
+                                               value="{{ page }}"
+                                               class="hidden"
+                                               title="pagination"
+                                               {% if isActive %}checked="checked"{% endif %}>
+                                    {% endblock %}
+
+                                    {% block component_pagination_item_label %}
+                                        <label class="{{ labelClasses }} py-1 px-3{% if isActive %} text-gray-900 bg-sw-navigation-active dark:bg-gray-500{% endif %}"
+                                               for="p{{ page }}">
+                                            {% block component_pagination_item_link %}
+                                                {% block component_pagination_item_text %}
+                                                    {{ page }}
+                                                {% endblock %}
+                                            {% endblock %}
+                                        </label>
+                                    {% endblock %}
+                                </li>
+                            {% endblock %}
+
+                        {% endfor %}
+                    {% endblock %}
+
+                    {% block component_pagination_next %}
+                        <li class="page-item page-next{% if currentPage == totalPages %} opacity-75{% endif %}">
+                            {% block component_pagination_next_input %}
+                                <input type="radio"
+                                       {% if currentPage == totalPages %}disabled="disabled"{% endif %}
+                                       name="p"
+                                       id="p-next"
+                                       value="{{ currentPage + 1 }}"
+                                       class="hidden"
+                                       title="pagination">
+                            {% endblock %}
+
+                            {% block component_pagination_next_label %}
+                                <label class="{{ labelClasses }} py-2 px-3" for="p-next">
+                                    {% block component_pagination_next_link %}
+                                        {% block component_pagination_next_icon %}
+                                            {% sw_icon 'arrow-medium-right' style { 'size': 'fluid', 'pack': 'solid'} %}
+                                        {% endblock %}
+                                    {% endblock %}
+                                </label>
+                            {% endblock %}
+                        </li>
+                    {% endblock %}
+
+                    {% block component_pagination_last %}
+                        <li class="page-item page-last{% if currentPage == totalPages %} opacity-75{% endif %}">
+                            {% block component_pagination_last_input %}
+                                <input type="radio"
+                                       {% if currentPage == totalPages %}disabled="disabled"{% endif %}
+                                       name="p"
+                                       id="p-last"
+                                       value="{{ totalPages }}"
+                                       class="hidden"
+                                       title="pagination">
+                            {% endblock %}
+
+                            {% block component_pagination_last_label %}
+                                <label class="{{ labelClasses }} py-2 px-3" for="p-last">
+                                    {% block component_pagination_last_link %}
+                                        {% block component_pagination_last_icon %}
+                                            {% sw_icon 'arrow-medium-double-right' style {
+                                                'size': 'fluid',
+                                                'pack': 'solid'
+                                                } %}
+                                        {% endblock %}
+                                    {% endblock %}
+                                </label>
+                            {% endblock %}
+                        </li>
+                    {% endblock %}
+                </ul>
+            {% endblock %}
+        </nav>
+    {% endif %}
+{% endblock %}

@@ -17,7 +17,7 @@
 
 {% block component_filter_multi_select %}
     <div class="filter-multi-select filter-multi-select-{{ name }} filter-panel-item mr-1 mb-1{% if not sidebar %} relative inline-block{% endif %}"
-         x-data="{open:false}"
+         x-data="{ open:false }"
          data-{{ pluginSelector }}="true"
          data-{{ pluginSelector }}-options='{{ dataPluginSelectorOptions|json_encode }}'>
 
@@ -52,7 +52,7 @@
 
         {% block component_filter_multi_select_dropdown %}
             <div class="filter-multi-select-dropdown filter-panel-item-dropdown{% if sidebar %} hidden{% else %} absolute left-0 z-50 float-left list-reset py-2 mt-1 text-base bg-white border border-gray-300 rounded{% endif %}"
-                 id="{{ filterItemId }}" x-show="open" @click.away="open=false" x-transition:enter-start="transition ease-in duration-3000">
+                 id="{{ filterItemId }}" x-show="open" @click.away="open=false" x-transition:enter-start="transition ease-in duration-3000" x-cloak>
                 {% block component_filter_multi_select_list %}
                     <ul class="filter-multi-select-list whitespace-nowrap">
                         {% for element in elements %}

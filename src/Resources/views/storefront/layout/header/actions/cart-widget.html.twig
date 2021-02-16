@@ -1,0 +1,17 @@
+{% sw_extends '@Storefront/storefront/layout/header/actions/cart-widget.html.twig' %}
+
+{% block layout_header_actions_cart_widget %}
+    <div>
+        <!-- header-cart-icon -->
+        <span class="float-left">
+            {% sw_icon 'bag' %}
+        </span>
+            {% if page.cart.lineItems|length > 0 %}
+                <span class="inline-block p-1 text-center font-semibold text-sm align-baseline leading-none rounded bg-blue-500 text-white hover:bg-blue-600 header-cart-badge">{{ page.cart.lineItems|length }}</span>
+            {% endif %}
+            <!-- header-cart-total -->
+            <span class="ml-2">
+            {{ page.cart.price.positionPrice|currency }}{{ "general.star"|trans|sw_sanitize }}
+        </span>
+    </div>
+{% endblock %}

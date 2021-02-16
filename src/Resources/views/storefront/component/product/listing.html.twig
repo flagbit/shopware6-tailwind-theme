@@ -1,0 +1,93 @@
+{% sw_extends '@Storefront/storefront/component/product/listing.html.twig' %}
+
+{% set currentPage = ((searchResult.criteria.offset + 1) / searchResult.criteria.limit )|round(0, 'ceil') %}
+{% set paginationConfig = { page: currentPage }|json_encode %}
+
+{% set disableEmptyFilter = shopware.config.core.listing.disableEmptyFilterOptions %}
+
+{% set listingPagination = {
+    sidebar: sidebar,
+    params: params,
+    dataUrl: dataUrl,
+    filterUrl: filterUrl,
+    disableEmptyFilter: disableEmptyFilter,
+    snippets: {
+        resetAllButtonText: 'listing.filterPanelResetAll'|trans|sw_sanitize
+    }
+} %}
+
+{% block product_listing %}
+    <div class="cms-element-product-listing-wrapper"
+         data-listing-pagination="true"
+         data-listing-pagination-options='{{ paginationConfig }}'
+         data-listing="true"
+         data-listing-options='{{ listingPagination|json_encode }}'>
+
+        {% block element_product_listing_wrapper_content %}
+            <div class="cms-element-product-listing">
+                {% if searchResult.total > 0 %}
+                    {% block element_product_listing_pagination_nav_actions %}
+                        <div class="cms-element-product-listing-actions grid grid-cols-1 gap-4 lg:grid-cols-2 pb-4 lg:p-0">
+                            <div class="flex justify-start">
+                                {% block element_product_listing_pagination_nav_top %}
+                                    {% sw_include '@Storefront/storefront/component/pagination.html.twig' with {
+                                        entities: searchResult,
+                                        criteria: searchResult.criteria
+                                    } %}
+                                {% endblock %}
+                            </div>
+
+                            <div class="flex justify-start lg:justify-end">
+                                {% block element_product_listing_sorting %}
+                                    {% sw_include '@Storefront/storefront/component/sorting.html.twig' with {
+                                        current: searchResult.sorting,
+                                        sortings: searchResult.availableSortings
+                                    } %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    {% endblock %}
+                {% endif %}
+
+                {% block element_product_listing_row %}
+                    <div class="flex flex-wrap  cms-listing-row js-listing-wrapper grid grid-cols-12 gap-4 py-2">
+                        {% if searchResult.total > 0 %}
+                            {% block element_product_listing_col %}
+                                {% for product in searchResult %}
+                                    <div class="cms-listing-col {{ listingColumns }}">
+                                        {% block element_product_listing_box %}
+                                            {% sw_include '@Storefront/storefront/component/product/card/box.html.twig' with {
+                                                'layout': boxLayout,
+                                                'displayMode': displayMode
+                                            } %}
+                                        {% endblock %}
+                                    </div>
+                                {% endfor %}
+                            {% endblock %}
+                        {% else %}
+                            {% block element_product_listing_col_empty %}
+                                <div class="cms-listing-col w-full">
+                                    {% block element_product_listing_col_empty_alert %}
+                                        {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
+                                            type: 'info',
+                                            content: 'listing.emptyResultMessage'|trans|sw_sanitize
+                                        } %}
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                {% if searchResult.total > searchResult.limit %}
+                    {% block element_product_listing_pagination_nav_bottom %}
+                        {% sw_include '@Storefront/storefront/component/pagination.html.twig' with {
+                            entities: searchResult,
+                            criteria: searchResult.criteria
+                        } %}
+                    {% endblock %}
+                {% endif %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

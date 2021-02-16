@@ -1,0 +1,21 @@
+{% sw_extends '@Storefront/storefront/utilities/offcanvas.html.twig' %}
+
+{% block utilities_offcanvas %}
+    {% block utilities_offcanvas_close %}
+        <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-gray-100 text-gray-800 hover:bg-gray-200 block w-full offcanvas-close js-offcanvas-close sticky-top">
+            {% block utilities_offcanvas_close_icon %}
+                {% sw_icon 'x' style { 'size': 'sm' } %}
+            {% endblock %}
+
+            {% block utilities_offcanvas_close_text %}
+                {{ "general.offcanvasCloseMenu"|trans|sw_sanitize }} HALLLOOOO
+            {% endblock %}
+        </button>
+    {% endblock %}
+
+    {% block utilities_offcanvas_content_container %}
+        <div class="offcanvas-content-container">
+            {% block utilities_offcanvas_content %}{% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

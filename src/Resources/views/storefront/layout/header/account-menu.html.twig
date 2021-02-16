@@ -1,0 +1,46 @@
+{% sw_extends '@Storefront/storefront/utilities/offcanvas.html.twig' %}
+
+{% block utilities_offcanvas_close %}
+    <button class="absolute top-0 right-0">
+        {% block utilities_offcanvas_close_icon %}
+            <a href="#" title="{{ "general.offcanvasCloseMenu"|trans|sw_sanitize }}" x-on:click="isOpen = !isOpen">
+                {% sw_icon 'x' style { 'size': 'sm' } %}
+            </a>
+        {% endblock %}
+    </button>
+{% endblock %}
+
+{% block utilities_offcanvas_content %}
+    <div class="account-menu">
+        {% block layout_header_actions_account_widget_dropdown_header %}
+            {% if not context.customer.guest %}
+                <div class="block py-2 px-6 mb-0 text-sm text-gray-800 whitespace-no-wrap account-menu-header">
+                    {{ "account.myAccount"|trans|sw_sanitize }}
+                </div>
+            {% endif %}
+        {% endblock %}
+
+        {% block layout_header_actions_account_widget_dropdown_login %}
+            {% if not context.customer %}
+                <div class="account-menu-login">
+                    <a href="{{ path('frontend.account.login.page') }}"
+                       title="{{ "account.loginSubmit"|trans|striptags }}"
+                       class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline block w-full bg-sw-buy-button text-sw-buy-button-text">
+                        {{ "account.loginSubmit"|trans|sw_sanitize }}
+                    </a>
+
+                    <div class="account-menu-register">
+                        {{ "account.orRegister"|trans|sw_sanitize }} <a href="{{ path('frontend.account.login.page') }}"
+                                                            title="{{ "account.orRegisterLink"|trans|striptags }}">{{ "account.orRegisterLink"|trans|striptags }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+
+        {% block layout_header_actions_account_widget_dropdown_links %}
+            <div class="account-menu-links">
+                {% sw_include '@Storefront/storefront/page/account/sidebar.html.twig' with {'headerWidget': true} %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
