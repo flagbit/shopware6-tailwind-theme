@@ -70,8 +70,10 @@
                         {% set rating = listing.aggregations.get('rating') %}
 
                         {% if rating.max > 0 %}
-                            {% sw_include '@Storefront/storefront/component/listing/filter/filter-rating.html.twig' with {
+                            {% sw_include '@Storefront/storefront/component/listing/filter/filter-rating-select.html.twig' with {
+                                sidebar: sidebar,
                                 name: 'rating',
+                                pluginSelector: 'filter-rating-select',
                                 displayName: 'listing.filterRatingDisplayName'|trans|sw_sanitize
                             } %}
                         {% endif %}

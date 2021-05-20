@@ -50,7 +50,7 @@
                 {% endif %}
 
                 {% block element_product_listing_row %}
-                    <div class="flex flex-wrap  cms-listing-row js-listing-wrapper grid grid-cols-12 gap-4 py-2">
+                    <div class="flex flex-wrap cms-listing-row js-listing-wrapper grid grid-cols-12 gap-4 py-2">
                         {% if searchResult.total > 0 %}
                             {% block element_product_listing_col %}
                                 {% for product in searchResult %}
@@ -66,7 +66,7 @@
                             {% endblock %}
                         {% else %}
                             {% block element_product_listing_col_empty %}
-                                <div class="cms-listing-col w-full">
+                                <div class="cms-listing-col w-full col-span-12">
                                     {% block element_product_listing_col_empty_alert %}
                                         {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
                                             type: 'info',

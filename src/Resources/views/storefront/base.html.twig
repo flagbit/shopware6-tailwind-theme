@@ -71,5 +71,6 @@
 
 {% block base_script_hmr_mode %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('tailwindcss/runtime.js', '@Tailwind') }}"></script>
     <script type="text/javascript" src="{{ asset('tailwindcss/js/app.js', '@Tailwind') }}"></script>
 {% endblock %}
