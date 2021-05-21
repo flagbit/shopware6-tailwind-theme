@@ -1,0 +1,57 @@
+{% sw_extends '@Storefront/storefront/layout/sidebar/category-navigation.html.twig' %}
+
+{% block layout_navigation_categories %}
+    {% set navigationMaxDepth = 3 %}
+
+    {% if not level %}
+        {% set level = 0 %}
+    {% endif %}
+
+    {% block layout_navigation_categories_list %}
+        {% if navigationTree|length > 0 %}
+            <ul class="category-navigation level-{{ level }} {% if level > 0 %} mt-4 ml-4{% endif %}">
+                {% for item in navigationTree %}
+                    {% if not itemKey %}
+                        {% set itemKey = 0 %}
+                    {% endif %}
+                    {% block layout_navigation_categories_list_entry %}
+                        <li class="category-navigation-entry{% if level == 0 %} py-4 border-b-2{% endif %} {% if level > 0 %}py-2{% endif %}">
+                            {% if (item.category.id in activeResult.id) or (item.category.id in activeResult.path) %}
+
+                                {% block layout_navigation_categories_link_children %}
+                                    <a class="category-navigation-link inline-block{% if level == 0 %} mt-4{% endif %}{% if item.category.id is same as(activeResult.id) %} font-bold is-active{% endif %}{% if item.category.id in activeResult.path %} font-medium in-path{% endif %}"
+                                       href="{% if item.category.externalLink %}{{ item.category.externalLink }}{% else %}{{ seoUrl('frontend.navigation.page', { navigationId: item.category.id }) }}{% endif %}">
+                                        {% block layout_navigation_categories_link_children_name %}
+                                            {{ item.category.translated.name }}
+                                        {% endblock %}
+                                    </a>
+                                {% endblock %}
+
+                                {% block layout_navigation_categories_recoursion %}
+                                    {% if level < navigationMaxDepth %}
+                                        {% sw_include '@Storefront/storefront/layout/sidebar/category-navigation.html.twig' with {
+                                            navigationTree: item.children,
+                                            activeResult: activeResult,
+                                            level: level + 1
+                                        } only %}
+                                    {% endif %}
+                                {% endblock %}
+                            {% else %}
+
+                                {% block layout_navigation_categories_link %}
+                                    <a class="category-navigation-link inline-block{% if item.category.id is same as(activeResult.id) %} font-bold is-active{% endif %}"
+                                       href="{% if item.category.externalLink %}{{ item.category.externalLink }}{% else %}{{ seoUrl('frontend.navigation.page', { navigationId: item.category.id }) }}{% endif %}">
+                                        {% block layout_navigation_categories_link_name %}
+                                            {{ item.category.translated.name }}
+                                        {% endblock %}
+                                    </a>
+                                {% endblock %}
+                            {% endif %}
+                        </li>
+                    {% endblock %}
+                    {% set itemKey = itemKey + 1 %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
