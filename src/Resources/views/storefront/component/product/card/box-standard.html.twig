@@ -75,7 +75,7 @@
                         <div class="product-info">
 
                             {% block component_product_box_rating %}
-                                {% if shopware.config.core.listing.showReview %}
+                                {% if config('core.listing.showReview') %}
                                     <div class="product-rating absolute top-7 right-5">
                                         {% if product.ratingAverage %}
                                             {% sw_include '@Storefront/storefront/component/review/rating.html.twig' with {
