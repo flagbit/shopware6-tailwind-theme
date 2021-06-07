@@ -43,9 +43,9 @@
                     {% if sidebar %}
                     data-toggle="collapse"
                     data-target="#{{ filterItemId }}"
-                    {% else %}
-                        @click="open = true"
-                    {% endif %}>
+                    {% endif %}
+                    @click="open = !open"
+            >
 
                 {% block component_filter_range_display_name %}
                     {{ displayName }}
@@ -63,7 +63,7 @@
         {% endblock %}
 
         {% block component_filter_range_dropdown %}
-            <div class="filter-range-dropdown filter-panel-item-dropdown{% if sidebar %} hidden{% else %} absolute
+            <div class="filter-range-dropdown filter-panel-item-dropdown{% if sidebar %} relative{% else %} absolute
                         left-0 z-50 float-left list-reset py-2 mt-1 text-base bg-white border border-gray-300 rounded{% endif %}"
                  id="{{ filterItemId }}" x-show="open" @click.away="open=false" x-transition:enter-start="transition ease-in duration-3000" x-cloak>
 
