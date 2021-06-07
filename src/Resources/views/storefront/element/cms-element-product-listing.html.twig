@@ -6,7 +6,7 @@
     {% set listingColumns = 'col-span-6 md:col-span-4 lg:col-span-3' %}
 
     {% if section and section.type == 'sidebar' %}
-        {% set listingColumns = 'col-sm-6 col-lg-6 col-xl-4' %}
+        {% set listingColumns = 'col-span-6 md:col-span-4 lg:col-span-3' %}
     {% endif %}
 
     {% set slot = page.cmsPage.firstElementOfType('product-listing') %}
