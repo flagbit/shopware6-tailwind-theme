@@ -129,6 +129,7 @@
                                                                                 'class': 'img-fluid gallery-slider-image magnifier-image js-magnifier-image',
                                                                                 'alt': (image.translated.alt ?: fallbackImageTitle),
                                                                                 'title': (image.translated.title ?: fallbackImageTitle),
+                                                                                'loading': 'lazy',
                                                                                 'data-full-image': image.url
                                                                             } %}
 
@@ -186,6 +187,7 @@
                                                             'class': 'img-fluid gallery-slider-image magnifier-image js-magnifier-image',
                                                             'alt': (mediaItems|first.translated.alt ?: fallbackImageTitle),
                                                             'title': (mediaItems|first.translated.title ?: fallbackImageTitle),
+                                                            'loading': 'lazy',
                                                             'data-full-image': mediaItems|first.url
                                                         } %}
 
@@ -246,7 +248,8 @@
                                                                         {% set attributes = {
                                                                             'class': 'gallery-slider-thumbnails-image',
                                                                             'alt': (image.translated.alt ?: fallbackImageTitle),
-                                                                            'title': (image.translated.title ?: fallbackImageTitle)
+                                                                            'title': (image.translated.title ?: fallbackImageTitle),
+                                                                            'loading': 'lazy'
                                                                         } %}
 
                                                                         {% if isProduct %}
@@ -361,7 +364,8 @@
                                                                                                             attributes: {
                                                                                                                 'class': 'gallery-slider-image js-image-zoom-element js-load-img',
                                                                                                                 'alt': (image.translated.alt ?: fallbackImageTitle),
-                                                                                                                'title': (image.translated.title ?: fallbackImageTitle)
+                                                                                                                'title': (image.translated.title ?: fallbackImageTitle),
+                                                                                                                'loading': 'lazy'
                                                                                                             },
                                                                                                             load: false
                                                                                                         } %}
@@ -437,7 +441,8 @@
                                                                                                             attributes: {
                                                                                                                 'class': 'gallery-slider-thumbnails-image js-load-img',
                                                                                                                 'alt': (image.translated.alt ?: fallbackImageTitle),
-                                                                                                                'title': (image.translated.title ?: fallbackImageTitle)
+                                                                                                                'title': (image.translated.title ?: fallbackImageTitle),
+                                                                                                                'loading': 'lazy'
                                                                                                             },
                                                                                                             load: false
                                                                                                         } %}

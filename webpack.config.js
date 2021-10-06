@@ -14,7 +14,10 @@ Encore
     .addEntry('js/app', './assets/js/app.js')
     .addStyleEntry('css/app', './assets/css/app.scss')
     .enableSingleRuntimeChunk()
-    .cleanupOutputBeforeBuild()
+    .cleanupOutputBeforeBuild([
+        '**/*',
+        '!.gitkeep',
+    ])
     .enableSourceMaps(!Encore.isProduction())
     .configureBabel(() => {
     }, {

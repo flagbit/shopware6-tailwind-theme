@@ -32,7 +32,8 @@
                                         {% set attributes = {
                                             'class': 'img-fluid image-slider-image',
                                             'alt': (image.media.translated.alt ?: ''),
-                                            'title': (image.media.translated.title ?: '')
+                                            'title': (image.media.translated.title ?: ''),
+                                            'loading': 'lazy'
                                         } %}
 
                                         {% if element.config.displayMode.value == 'cover' or element.config.displayMode.value == 'contain' %}

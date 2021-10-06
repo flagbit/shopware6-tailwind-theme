@@ -1,7 +1,7 @@
 {% sw_extends '@Storefront/storefront/component/listing/filter/filter-multi-select-list-item.html.twig' %}
 
 {% block component_filter_multi_select_list_item %}
-    <div class="custom-control custom-checkbox">
+    <div class="custom-control custom-checkbox m-0 mt-1 mx-4">
         {% set id = element.id %}
         {% set name = element.translated.name %}
         {% block component_filter_multi_select_list_item_checkbox_input %}
@@ -13,7 +13,7 @@
         {% endblock %}
 
         {% block component_filter_multi_select_list_item_label_element %}
-            <label class="filter-multi-select-item-label custom-control-label" for="{{ id }}">
+            <label class="filter-multi-select-item-label custom-control-label pl-2" for="{{ id }}">
                 {% block component_multi_select_list_item_label %}
                     {{ name }}
                 {% endblock %}

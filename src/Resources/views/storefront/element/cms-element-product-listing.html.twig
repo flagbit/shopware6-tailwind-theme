@@ -3,10 +3,10 @@
 {% block element_product_listing %}
     {# @var result \Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult #}
     {% set searchResult = element.data.listing %}
-    {% set listingColumns = 'col-span-6 md:col-span-4 lg:col-span-3' %}
+    {% set listingColumns = 'col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3' %}
 
     {% if section and section.type == 'sidebar' %}
-        {% set listingColumns = 'col-span-6 md:col-span-4 lg:col-span-3' %}
+        {% set listingColumns = 'col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4' %}
     {% endif %}
 
     {% set slot = page.cmsPage.firstElementOfType('product-listing') %}

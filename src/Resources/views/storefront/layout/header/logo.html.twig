@@ -26,7 +26,10 @@
                             {% if theme_config('sw-logo-desktop') %}
                                 <img src="{{ theme_config('sw-logo-desktop') |sw_encode_url }}"
                                      alt="{{ "header.logoLink"|trans|striptags }}"
-                                     class="img-fluid header-logo-main-img"/>
+                                     class="img-fluid header-logo-main-img"
+                                     width="240"
+                                     height="35"
+                                     loading="lazy"/>
                             {% endif %}
                         {% endblock %}
                     </picture>

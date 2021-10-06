@@ -10,12 +10,12 @@
     } %}
 
     {% block component_filter_boolean_panel_item %}
-        <div class="filter-boolean filter-panel-item"
+        <div class="filter-boolean filter-panel-item inline-block"
              data-filter-boolean="true"
              data-filter-boolean-options='{{ filterBooleanOptions|json_encode }}'>
 
             {% block component_filter_boolean_container %}
-                <div class="custom-control custom-checkbox">
+                <div class="custom-control custom-checkbox m-0 mt-1 mx-4">
 
                     {% block component_filter_boolean_checkbox %}
                         <input type="checkbox"

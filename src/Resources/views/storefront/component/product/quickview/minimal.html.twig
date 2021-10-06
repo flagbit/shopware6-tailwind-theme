@@ -16,7 +16,8 @@
                                 attributes: {
                                     'class': 'img-fluid quickview-minimal-img',
                                     'alt': ( page.product.cover.translated.alt ?: ''),
-                                    'title': (page.product.cover.translated.title ?: '')
+                                    'title': (page.product.cover.translated.title ?: ''),
+                                    'loading': 'lazy'
                                 }
                             } %}
                         {% else %}
@@ -60,7 +61,8 @@
                                             },
                                             attributes: {
                                                 'class': 'quickview-minimal-product-manufacturer-logo',
-                                                'alt': ( manufacturer.translated.name ?: '')
+                                                'alt': ( manufacturer.translated.name ?: ''),
+                                                'loading': 'lazy'
                                             }
                                         } %}
                                     {% else %}

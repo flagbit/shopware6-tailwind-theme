@@ -35,7 +35,10 @@
                                     {% set attributes = {
                                         'class': 'product-image is-'~displayMode,
                                         'alt': (cover.translated.alt ?: name),
-                                        'title': (cover.translated.title ?: name)
+                                        'title': (cover.translated.title ?: name),
+                                        'loading': 'lazy',
+                                        'width': '100',
+                                        'height': '80'
                                     } %}
 
                                     {% if displayMode == 'cover' or displayMode == 'contain' %}
@@ -43,15 +46,16 @@
                                     {% endif %}
 
                                     {% if displayMode == 'cover' or displayMode == 'standard' %}
-                                        {% set attributes = attributes|merge({ 'class': 'object-cover h-48 w-full' }) %}
+                                        {% set attributes = attributes|merge({ 'class': 'object-cover w-full' }) %}
                                     {% endif %}
 
                                     {% if displayMode == 'contain' %}
-                                        {% set attributes = attributes|merge({ 'class': 'object-contain h-48 w-full' }) %}
+                                        {% set attributes = attributes|merge({ 'class': 'object-contain w-full' }) %}
                                     {% endif %}
 
                                     {% sw_thumbnails 'product-image-thumbnails' with {
                                         media: cover,
+                                        fourHundredPxThumbnail: true,
                                         sizes: {
                                             'xs': '501px',
                                             'sm': '315px',
@@ -97,7 +101,7 @@
                             {% endblock %}
 
                             {% block component_product_box_variant_characteristics %}
-                                <div class="product-variant-characteristics">
+                                <div class="product-variant-characteristics h-10">
                                     <div class="product-variant-characteristics-text">
                                         {% if not product.isGrouped %}
                                             {% for variation in product.variation %}
@@ -116,7 +120,7 @@
                             {% endblock %}
 
                             {% block component_product_box_description %}
-                                <div class="product-description h-40 overflow-ellipsis">
+                                <div class="product-description h-36 overflow-ellipsis overflow-hidden">
                                     {{ product.translated.description|striptags|raw }}
                                 </div>
                             {% endblock %}
