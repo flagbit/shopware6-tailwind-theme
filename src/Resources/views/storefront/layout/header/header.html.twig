@@ -14,7 +14,7 @@
             {% endblock %}
 
             {% block layout_header_search %}
-                <div class="order-2 relative sm:flex-grow sm:flex-1 sm:order-1 header-search-col">
+                <div class="order-2 relative flex-grow flex-1 order-1 header-search-col">
                     <div class="flex flex-wrap ">
                         <div class="relative flex-grow max-w-full flex-1 px-4">
                             {% sw_include '@Storefront/storefront/layout/header/search.html.twig' %}
@@ -24,13 +24,13 @@
             {% endblock %}
 
             {% block layout_header_actions %}
-                <div class="order-1 col-sm-auto sm:order-2 header-actions-col">
-                    <div class="flex flex-wrap  no-gutters">
+                <div class="order-1 col-sm-auto order-2 header-actions-col absolute right-0 top-20 z-40 sm:relative sm:inset-0">
+                    <div class="flex flex-wrap  no-gutters relative top-2 sm:inset-0">
 
                         {% block layout_header_search_toggle %}
-                            <div class="col-auto sm:hidden">
+                            <div class="col-auto">
                                 <div class="search-toggle">
-                                    <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline header-actions-btn search-toggle-btn js-search-toggle-btn collapsed"
+                                    <button class="inline-block align-middle text-center select-none font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline header-actions-btn search-toggle-btn js-search-toggle-btn collapsed"
                                             type="button"
                                             data-toggle="collapse"
                                             data-target="#searchCollapse"

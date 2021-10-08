@@ -7,7 +7,7 @@
     "glob-all": "^3.2.1",
     "node-sass": "^6.0.0",
     "path": "^0.12.7",
-    "postcss": "^8.2.15",
+    "postcss": "^8.3.9",
     "postcss-import": "^14.0.2",
     "postcss-loader": "^5.3.0",
     "purgecss-webpack-plugin": "^4.0.3",
@@ -16,10 +16,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "build:dev": "encore dev",
-    "build:prod": "encore production",
-    "watch:dev": "encore dev --watch",
-    "watch:prod": "encore production --watch"
-  },
-  "dependencies": {}
+    "build:jit": "NODE_ENV=development TAILWIND_MODE=watch encore dev --config-name jitConfig --watch",
+    "build:dev": "encore dev --config-name defaultConfig",
+    "build:prod": "encore production --config-name defaultConfig",
+    "watch:dev": "encore dev --config-name defaultConfig --watch",
+    "watch:prod": "encore production --config-name defaultConfig --watch"
+  }
 }
