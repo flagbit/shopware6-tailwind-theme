@@ -67,7 +67,6 @@ Encore
         '!.gitkeep',
     ])
     .enableSourceMaps(!Encore.isProduction())
-
     .enablePostCssLoader(options => {
         options.postcssOptions = {
             config: path.join(__dirname, 'postcss-jit.config.js'),
