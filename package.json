@@ -4,6 +4,7 @@
     "alpinejs": "^2.8.2",
     "autoprefixer": "^10.2.5",
     "browserslist": "^4.16.6",
+    "cpx": "^1.5.0",
     "glob-all": "^3.2.1",
     "node-sass": "^6.0.0",
     "path": "^0.12.7",
@@ -17,8 +18,10 @@
   "license": "MIT",
   "scripts": {
     "build:jit": "NODE_ENV=development TAILWIND_MODE=watch encore dev --config-name jitConfig --watch",
+    "build:jit:copy": "yarn run build:jit && yarn run copy",
     "build:dev": "encore dev --config-name defaultConfig",
     "build:prod": "encore production --config-name defaultConfig",
+    "copy": "cpx \"src/Resources/public/tailwindcss/**/*.{css,js,json}\" \"../../../public/bundles/tailwind/tailwindcss\" --watch --clean --verbose",
     "watch:dev": "encore dev --config-name defaultConfig --watch",
     "watch:prod": "encore production --config-name defaultConfig --watch"
   }
