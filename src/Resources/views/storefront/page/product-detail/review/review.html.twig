@@ -51,7 +51,7 @@
 							{% endblock %}
 
 							{% block page_product_detail_review_form_container %}
-								<div class="hidden multi-collapse {% if ratingSuccess == -1 %}opacity-100 block{% endif %}"
+								<div class="hidden multi-collapse {% if ratingSuccess == -1 %}opacity-100{% endif %}"
 									 id="review-form">
 									{% if context.customer and not context.customer.guest %}
 										<div class="product-detail-review-form">
@@ -67,11 +67,11 @@
 
 							{% block page_product_detail_review_list_container %}
 								<div id="review-list"
-									 class="hidden multi-collapse product-detail-review-list {% if ratingSuccess != -1 %}opacity-100 block{% endif %}">
+									 class="hidden multi-collapse product-detail-review-list {% if ratingSuccess != -1 %}opacity-100{% endif %}">
 
                                     {% block page_product_detail_review_list %}
                                         {% block page_product_detail_review_list_actions %}
-                                            <div class="flex flex-wrap  items-center product-detail-review-actions">
+                                            <div class="flex flex-wrap items-center product-detail-review-actions">
                                                 {% set formAjaxSubmitOptions = {
                                                     replaceSelectors: [".js-review-container"],
                                                     submitOnChange: true

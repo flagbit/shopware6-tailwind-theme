@@ -1,11 +1,11 @@
 {% sw_extends '@Storefront/storefront/page/product-detail/tabs.html.twig' %}
 
 {% block page_product_detail_tabs_inner %}
-    <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card-tabs">
+    <div class="relative flex flex-col rounded break-words border bg-white border border-gray-300 card-tabs">
         {% block page_product_detail_tabs_navigation %}
-            <div class="py-3 px-6 mb-0 bg-gray-200 border-b-1 border-gray-300 text-gray-900 product-detail-tab-navigation">
+            <div class="py-3 px-6 bg-gray-200 border-b border-gray-300 product-detail-tab-navigation">
                 {% block page_product_detail_tabs_navigation_container %}
-                    <ul class="flex flex-wrap list-none pl-0 mb-0 border border-t-0 border-r-0 border-l-0 border-b-1 border-gray-200 product-detail-tab-navigation-list"
+                    <ul class="flex flex-wrap list-none border-b border-gray-200 product-detail-tab-navigation-list"
                         id="product-detail-tabs"
                         role="tablist">
                         {% block page_product_detail_tabs_navigation_description %}
@@ -67,7 +67,7 @@
                 {% block page_product_detail_tabs_content_container %}
                     <div class="tab-content">
                         {% block page_product_detail_tabs_content_description %}
-                            <div class="tab-pane opacity-0 opacity-100 block {% if (ratingSuccess != 1) and (ratingSuccess != -1) %}active{% endif %}"
+                            <div class="tab-pane {% if (ratingSuccess != 1) and (ratingSuccess != -1) %}active{% endif %}"
                                  id="description-tab-pane"
                                  role="tabpanel"
                                  aria-labelledby="description-tab">
@@ -77,7 +77,7 @@
 
                         {% block page_product_detail_tabs_content_review %}
                             {% if config('core.listing.showReview') %}
-                                <div class="tab-pane opacity-0 opacity-100 block {% if (ratingSuccess == 1) or (ratingSuccess == -1) %}active{% endif %}"
+                                <div class="tab-pane {% if (ratingSuccess == 1) or (ratingSuccess == -1) %}active{% endif %}"
                                      id="review-tab-pane"
                                      role="tabpanel"
                                      aria-labelledby="review-tab">
