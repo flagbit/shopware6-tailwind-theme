@@ -1,3 +1,6 @@
 @tailwind base;
+@import "./base/modules";
 @tailwind components;
+@import "./components/modules";
 @tailwind utilities;
+@import  "./utilities/modules";
