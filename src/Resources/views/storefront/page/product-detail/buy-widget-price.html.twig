@@ -90,7 +90,7 @@
         {% block page_product_detail_price_content %}
             {% set listPrice = price.listPrice %}
 
-            <p class="product-detail-price{% if listPrice.percentage > 0 %} with-list-price{% endif %}">
+            <p class="product-detail-price text-3xl font-bold {% if listPrice.percentage > 0 %} with-list-price{% endif %}">
                 {{ price.unitPrice|currency }}{{ "general.star"|trans|sw_sanitize }}
             </p>
 
@@ -123,7 +123,7 @@
 
         {% if page.product.purchaseUnit %}
             {% block page_product_detail_price_unit %}
-                <div class="product-detail-price-unit">
+                <div class="product-detail-price-unit text-xs">
                     {% block page_product_detail_price_unit_label %}
                         <span class="price-unit-label">
                             {{ "detail.priceUnitName"|trans|sw_sanitize }}
