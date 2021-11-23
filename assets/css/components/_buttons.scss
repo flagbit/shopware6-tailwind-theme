@@ -1,0 +1,7 @@
+.btn {
+  @apply border align-middle text-center button;
+
+  .btn-primary {
+    @apply bg-sw-primary text-white;
+  }
+}

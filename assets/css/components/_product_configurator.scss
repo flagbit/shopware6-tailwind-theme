@@ -1,10 +1,11 @@
+// Some styles are added here because this would be too much for the template
 .product-detail-configurator {
   .product-detail-configurator-option-input {
     & + .product-detail-configurator-option-label {
       @apply opacity-50 border border-sw-border;
 
       &.is-display-text {
-        @apply h-auto px-3 py-2;
+        @apply px-3 py-2;
       }
     }
 
