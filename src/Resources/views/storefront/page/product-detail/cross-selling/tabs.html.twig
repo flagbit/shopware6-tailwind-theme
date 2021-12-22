@@ -1,0 +1,95 @@
+{% sw_extends '@Storefront/storefront/page/product-detail/cross-selling/tabs.html.twig' %}
+
+{% block page_product_detail_cross_selling_tabs_inner %}
+    <div class="relative flex flex-col rounded break-words border bg-white border-gray-300 card-tabs" data-cross-selling="true">
+        {% block page_product_detail_cross_selling_tabs_navigation %}
+            <div class="py-3 px-6 bg-gray-200 border-b border-gray-300 product-detail-tab-navigation product-cross-selling-tab-navigation">
+                {% block page_product_detail_cross_selling_tabs_navigation_container %}
+                    <ul class="flex flex-wrap list-none border-b border-gray-200 product-detail-tab-navigation-list"
+                        id="product-detail-cross-selling-tabs"
+                        role="tablist">
+                        {% for item in crossSellings %}
+                            {% set id = item.crossSelling.id %}
+                            {% if item.crossSelling.active and item.getProducts().elements %}
+                                <li class="">
+                                    <a class="inline-block py-2 px-4 no-underline product-detail-tab-navigation-link{% if loop.first %} active{% endif %}"
+                                       id="cs-{{ id }}-tab"
+                                       data-toggle="tab"
+                                       href="#cs-{{ id }}-tab-pane"
+                                       role="tab"
+                                       aria-controls="cs-{{ id }}-tab-pane"
+                                       aria-selected="true">
+                                        {{ item.crossSelling.translated.name }}
+                                        <span class="product-detail-tab-navigation-icon">
+                                            {% sw_icon 'arrow-medium-right' style {'pack':'solid'} %}
+                                        </span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block page_product_detail_cross_selling_tabs_content %}
+            <div class="product-detail-tabs-content flex-auto p-6">
+                {% block page_product_detail_cross_selling_tabs_content_container %}
+                    <div class="tab-content">
+                        {% for item in crossSellings %}
+                            {% set id = item.crossSelling.id %}
+                            {% if item.crossSelling.active and item.getProducts().elements %}
+                                <div class="tab-pane{% if loop.first %} active{% endif %}"
+                                     id="cs-{{ id }}-tab-pane"
+                                     role="tabpanel"
+                                     aria-labelledby="cs-{{ id }}-tab">
+                                        {% set config = {
+                                            'title': {
+                                                'value': item.crossSelling.name
+                                            },
+                                            'border': {
+                                                'value': false
+                                            },
+                                            'rotate': {
+                                                'value': false
+                                            },
+                                            'products': {
+                                                'value': item.getProducts()
+                                            },
+                                            'boxLayout': {
+                                                'value': 'standard'
+                                            },
+                                            'elMinWidth': {
+                                                'value': '300px'
+                                            },
+                                            'navigation': {
+                                                'value': true
+                                            },
+                                            'displayMode': {
+                                                'value': 'minimal'
+                                            },
+                                            'verticalAlign': {
+                                                'value': 'top'
+                                            },
+                                        } %}
+
+                                        {% sw_include "@Storefront/storefront/element/cms-element-product-slider.html.twig" with {
+                                            sliderConfig: config,
+                                            element: {
+                                                'data': {
+                                                    'products': {
+                                                        elements: item.getProducts()
+                                                    }
+                                                },
+                                                type: 'product-slider'
+                                            }
+                                        } %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

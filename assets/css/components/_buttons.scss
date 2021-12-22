@@ -1,0 +1,17 @@
+.btn {
+  @apply border align-middle text-center select-none font-normal rounded leading-normal no-underline;
+}
+
+.btn-primary {
+  @apply bg-sw-primary text-white;
+}
+
+@variants hover {
+  .btn-grey {
+    @apply bg-gray-600 text-white;
+  }
+
+  .btn-grey-outline {
+    @apply bg-white text-gray-600 border-gray-600;
+  }
+}

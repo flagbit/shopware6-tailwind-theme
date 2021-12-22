@@ -1,0 +1,38 @@
+{% sw_extends '@Storefront/storefront/page/product-detail/properties.html.twig' %}
+
+{% block page_product_detail_properties_inner %}
+    <div class="product-detail-properties">
+        {% block page_product_detail_properties_container %}
+            <div class="flex flex-wrap  product-detail-properties-container">
+                <div class="md:w-4/5 pr-4 pl-4 lg:w-1/2 pr-4 pl-4">
+                    {% block page_product_detail_properties_table %}
+                        <table class="w-full max-w-full mb-4 table-striped product-detail-properties-table">
+                            <tbody>
+                            {# @var product \Shopware\Core\Content\Product\SalesChannel\SalesChannelProductEntity #}
+                            {% for group in page.product.sortedProperties %}
+                                {% block page_product_detail_properties_table_row %}
+                                    <tr class="properties-row">
+                                        {% block page_product_detail_properties_item_label %}
+                                            <th class="properties-label">{{ group.translated.name|e }}:</th>
+                                        {% endblock %}
+                                        {% block page_product_detail_properties_item_value %}
+                                            <td class="properties-value">
+                                                {% apply spaceless %}
+                                                    {% for option in group.options %}
+                                                        {% set i = ( i | default(0) ) + 1 %}
+                                                        <span>{% if i > 1 %}, {% endif %}{{ option.translated.name|e }}</span>
+                                                    {% endfor %}
+                                                {% endapply %}
+                                            </td>
+                                        {% endblock %}
+                                    </tr>
+                                {% endblock %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

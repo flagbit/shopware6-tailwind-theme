@@ -1,0 +1,24 @@
+// Some styles are added here because this would be too much for the template
+.product-detail-configurator {
+  .product-detail-configurator-option-input {
+    & + .product-detail-configurator-option-label {
+      @apply opacity-50 border border-sw-border;
+
+      &.is-display-text {
+        @apply px-3 py-2;
+      }
+    }
+
+    &.is-combinable + .product-detail-configurator-option-label {
+      @apply opacity-100 cursor-pointer inline-flex items-center justify-center;
+    }
+
+    &:checked + .product-detail-configurator-option-label {
+      @apply border-sw-primary;
+
+      &.is-display-text {
+        @apply bg-sw-primary text-white;
+      }
+    }
+  }
+}
