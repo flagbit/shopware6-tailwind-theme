@@ -1,0 +1,15 @@
+{% block sw_theme_manager_detail_save_modal_info %}
+    <div class="sw_theme_manager__confirm-save-text">
+        {{ $tc('sw-theme-manager.modal.textSaveInfo', 0,
+        { themeName: theme.name }) }}
+    </div>
+    <sw-alert
+        v-if="isTailwind"
+        variant="warning"
+        appearance="default"
+        :show-icon="true"
+        :closable="false"
+    >
+        {{ $t('sw-theme-manager.modal.textSaveInfoTailwind') }}
+    </sw-alert>
+{% endblock %}

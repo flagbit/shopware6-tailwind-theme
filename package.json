@@ -22,6 +22,7 @@
     "build:dev": "encore dev --config-name defaultConfig",
     "build:prod": "encore production --config-name defaultConfig",
     "copy": "cpx \"src/Resources/public/tailwindcss/**/*.{css,js,json}\" \"../../../public/bundles/tailwind/tailwindcss\" --watch --clean --verbose",
+    "copy:assets": "cpx \"src/Resources/public/tailwindcss/**/*.{css,js,json}\" \"../../../public/bundles/tailwind/tailwindcss\"",
     "watch:dev": "encore dev --config-name defaultConfig --watch",
     "watch:prod": "encore production --config-name defaultConfig --watch"
   }
