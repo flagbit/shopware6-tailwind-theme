@@ -290,7 +290,7 @@
 
                         {% block element_image_gallery_inner_zoom_modal_wrapper %}
                             {% if zoomModal %}
-                                <div class="zoom-modal-wrapper">
+                                <div class="zoom-modal-wrapper absolute overflow-hidden w-0 h-0">
                                     {% block element_image_gallery_inner_zoom_modal %}
                                         <div class="modal is-fullscreen zoom-modal js-zoom-modal{% if imageCount is same as(1) %} no-thumbnails{% endif %}"
                                              data-image-zoom-modal="true"
@@ -303,7 +303,7 @@
                                                         <div class="modal-content"{% if imageCount > 1 %} data-modal-gallery-slider="true"{% endif %}>
                                                             {% block element_image_gallery_inner_zoom_modal_close_button %}
                                                                 <button type="button"
-                                                                        class="modal-close absolute top-0 bottom-0 right-0 px-4 py-3"
+                                                                        class="modal-close right-0"
                                                                         data-dismiss="modal"
                                                                         aria-label="Close">
                                                                     {% block element_image_gallery_inner_zoom_modal_close_icon %}

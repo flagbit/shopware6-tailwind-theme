@@ -1,0 +1,44 @@
+.modal {
+  @apply fixed z-1050 inset-0 hidden w-full h-full overflow-hidden;
+
+  &.is-fullscreen {
+    .modal-dialog, .modal-content {
+      @apply absolute w-full h-full max-w-full min-h-full inset-0 m-0 overflow-y-scroll;
+    }
+  }
+
+  &.zoom-modal {
+    .modal-content {
+      @apply overflow-hidden;
+    }
+
+    .gallery-slider {
+      @apply absolute inset-y-0 h-auto w-full;
+    }
+  }
+
+  .gallery-slider-item, .gallery-slider-single-image {
+    @apply relative block h-full max-w-full;
+  }
+
+  .gallery-slider-image {
+    @apply relative block max-h-full max-w-full;
+  }
+
+  .modal-content {
+    @apply relative flex flex-col w-full bg-sw-background;
+  }
+
+  .image-zoom-container {
+    @apply flex w-full h-full justify-center content-center items-center;
+  }
+
+  .modal-close, .zoom-modal-actions {
+    @apply absolute top-0 opacity-100 m-6;
+  }
+}
+
+/* purgecss ignore */
+.modal-open {
+  @apply overflow-hidden;
+}
