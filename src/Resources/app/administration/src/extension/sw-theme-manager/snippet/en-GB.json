@@ -1,0 +1,7 @@
+{
+    "sw-theme-manager": {
+        "modal": {
+            "textSaveInfoTailwind" : "This process may take longer than usual because the tailwind assets need to be installed, compiled and copied. "
+        }
+    }
+}

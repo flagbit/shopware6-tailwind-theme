@@ -1,0 +1,7 @@
+{
+  "sw-theme-manager": {
+    "modal": {
+        "textSaveInfoTailwind" : "Dieser Prozess kann länger dauern als üblich, da die Tailwind-Assets installiert, kompiliert und kopiert werden müssen."
+    }
+  }
+}
